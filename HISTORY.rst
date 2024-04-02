@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.66
+++++++
+* `azdev style`: Use azdev config files when .flake8 and pylintrc are not found in azure cli/ext repo.
+
 0.1.65
 ++++++
 * `azdev command-change meta-diff`: Add diff support for deprecate_info in subgroup, cmd, parameters and options.
