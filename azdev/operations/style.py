@@ -222,6 +222,12 @@ def _config_file_path(style_type="pylint"):
 
     if cli_repo_path:
         cli_config_path = os.path.join(cli_repo_path, config_file_mapping[style_type])
+        if not os.path.exists(cli_config_path):
+            cli_config_path = os.path.join(
+                get_azdev_config_dir(),
+                "config_files",
+                default_config_file_mapping["cli"][style_type],
+            )
     else:
         cli_config_path = os.path.join(
             get_azdev_config_dir(),
@@ -231,6 +237,12 @@ def _config_file_path(style_type="pylint"):
 
     if ext_repo_path:
         ext_config_path = os.path.join(ext_repo_path, config_file_mapping[style_type])
+        if not os.path.exists(ext_config_path):
+            ext_config_path = os.path.join(
+                get_azdev_config_dir(),
+                "config_files",
+                default_config_file_mapping["ext"][style_type],
+            )
     else:
         ext_config_path = os.path.join(
             get_azdev_config_dir(),
