@@ -95,3 +95,20 @@ class TestConfigFilePath(unittest.TestCase):
             r = _config_file_path(style_type="flake8")
             self.assertTrue(r[0].endswith(cli_repo_path + "/.flake8"))
             self.assertTrue(r[1].endswith(ext_repo_path + "/.flake8"))
+
+    def test_style_with_all_setup_but_not_exist(self):
+        cli_repo_path = "/fake/azure-cli"
+        ext_repo_path = "/fake/azure-cli-extensions"
+        mocked_config = configparser.ConfigParser()
+        mocked_config.add_section("cli")
+        mocked_config.set("cli", "repo_path", cli_repo_path)
+        mocked_config.add_section("ext")
+        mocked_config.set("ext", "repo_paths", ext_repo_path)
+
+        with mock.patch("azdev.operations.style.get_azdev_config", return_value=mocked_config):
+            r1 = _config_file_path(style_type="flake8")
+            r2 = _config_file_path(style_type="pylint")
+            self.assertTrue(r1[0].endswith("/config_files/cli.flake8"))
+            self.assertTrue(r1[1].endswith("/config_files/cli_pylintrc"))
+            self.assertTrue(r2[0].endswith("/config_files/ext.flake8"))
+            self.assertTrue(r2[1].endswith("/config_files/ext_pylintrc"))
