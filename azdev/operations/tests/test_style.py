@@ -109,6 +109,6 @@ class TestConfigFilePath(unittest.TestCase):
             r1 = _config_file_path(style_type="flake8")
             r2 = _config_file_path(style_type="pylint")
             self.assertTrue(r1[0].endswith("/config_files/cli.flake8"))
-            self.assertTrue(r1[1].endswith("/config_files/cli_pylintrc"))
-            self.assertTrue(r2[0].endswith("/config_files/ext.flake8"))
+            self.assertTrue(r1[1].endswith("/config_files/ext.flake8"))
+            self.assertTrue(r2[0].endswith("/config_files/cli_pylintrc"))
             self.assertTrue(r2[1].endswith("/config_files/ext_pylintrc"))
