@@ -20,7 +20,7 @@ class MyTestCase(unittest.TestCase):
                                         current_version="3.11.0")
         self.assertEqual("4.0.0", version_test.get("version"), "Version cal error")
         self.assertEqual(True, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(False, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual(False, version_test.get("preview_tag", False), "Version tag error")
 
     def test_version_upgrade_major_was_preview(self):
         # preview version update major and add preview suffix
@@ -29,7 +29,7 @@ class MyTestCase(unittest.TestCase):
                                         current_version="3.11.0", is_preview=True)
         self.assertEqual("4.0.0b1", version_test.get("version"), "Version cal error")
         self.assertEqual(False, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(True, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual(False, version_test.get("preview_tag", False), "Version tag error")
 
     def test_version_upgrade_major_was_exp(self):
         # preview version update major and add preview suffix
@@ -38,7 +38,8 @@ class MyTestCase(unittest.TestCase):
                                         current_version="3.11.0", is_experimental=True)
         self.assertEqual("4.0.0b1", version_test.get("version"), "Version cal error")
         self.assertEqual(False, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(True, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual("add", version_test.get("preview_tag", False), "Version preview tag error")
+        self.assertEqual("remove", version_test.get("exp_tag", False), "Version exp tag error")
 
     def test_version_upgrade_major_to_preview(self):
         # preview version update major and add preview suffix
@@ -47,7 +48,7 @@ class MyTestCase(unittest.TestCase):
                                         current_version="3.11.0", next_version_pre_tag="preview")
         self.assertEqual("4.0.0b1", version_test.get("version"), "Version cal error")
         self.assertEqual(False, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(False, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual("add", version_test.get("preview_tag", False), "Version tag error")
 
     def test_version_upgrade_to_normal_version(self):
         # preview version update major and add preview suffix
@@ -56,7 +57,7 @@ class MyTestCase(unittest.TestCase):
                                         current_version="0.11.0", is_preview=True)
         self.assertEqual("1.0.0b1", version_test.get("version"), "Version cal error")
         self.assertEqual(False, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(True, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual(False, version_test.get("preview_tag", False), "Version tag error")
 
     def test_version_upgrade_minor_tagged(self):
         # stable version update minor as user tagged
@@ -89,4 +90,4 @@ class MyTestCase(unittest.TestCase):
                                         current_version="1.0.0b3")
         self.assertEqual("1.0.0b4", version_test.get("version"), "Version cal error")
         self.assertEqual(False, version_test.get("is_stable"), "Version tag error")
-        self.assertEqual(False, version_test.get("has_preview_tag"), "Version tag error")
+        self.assertEqual("add", version_test.get("preview_tag", False), "Version tag error")

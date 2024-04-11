@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.67
+++++++
+* `azdev extension cal-next-version`: Justify preview/exp tag operation based on last version's tag and next version's stable/preview tag.
+
 0.1.66
 ++++++
 * `azdev style`: Use azdev config files when .flake8 and pylintrc are not found in azure cli/ext repo.

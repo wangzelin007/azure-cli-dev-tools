@@ -195,12 +195,30 @@ class VersionUpgradeMod:
         except Exception as e:
             raise ValueError(str(e))
 
+    def gen_preview_exp_tags(self, res_dict):
+        """
+        if next_version is preview: due to doc generation requirement, preview tag is needed
+        1. preview tag need to be reserved which had previous preview tag, nothing to do
+        2. preview tag need to be added if previous version does not have preview tag
+
+        if next_version is stable:
+        remove previous existed preview tag
+
+        exp tag should be removed for stable/preview
+        """
+        if self.has_exp_tag:
+            res_dict["exp_tag"] = "remove"
+        if self.next_version.pre:
+            if not self.has_preview_tag:
+                res_dict["preview_tag"] = "add"
+        else:
+            if self.has_preview_tag:
+                res_dict["preview_tag"] = "remove"
+
     def format_outputs(self):
-        has_preview_tag = bool(self.next_version.pre and (self.has_preview_tag or self.has_exp_tag))
         result = {
             "version": str(self.next_version),
-            "is_stable": self.next_version.pre is None,
-            "has_preview_tag": has_preview_tag,
-            "has_exp_tag": False
+            "is_stable": self.next_version.pre is None
         }
+        self.gen_preview_exp_tags(result)
         return result
