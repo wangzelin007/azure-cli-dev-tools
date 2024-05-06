@@ -386,9 +386,6 @@ class MetaChangeDetect:
         self.diff_objs = new_diff_objs
 
     def check_deep_diffs(self):
-        for diff_type, diff_key in self.deep_diff.items():
-            for it in diff_key:
-                    print(diff_type, ": ", it)
         self.check_dict_item_remove()
         self.check_dict_item_add()
         self.check_list_item_remove()

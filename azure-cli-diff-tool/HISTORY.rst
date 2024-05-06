@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.0.7
+++++++
+* Remove unnecessary debug logs for meta comparison
+
 0.0.6
 ++++++
 * Add diff support for deprecate_info in subgroup, cmd, parameters and options
