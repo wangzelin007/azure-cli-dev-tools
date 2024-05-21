@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.69
+++++++
+* `azdev command-change tree-export`: Add command help message.
+
 0.1.68
 ++++++
 * `azdev command-change tree-export`: Add new command to support export command tree of CLI modules.
