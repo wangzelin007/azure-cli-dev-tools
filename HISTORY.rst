@@ -2,6 +2,11 @@
 
 Release History
 ===============
+0.1.71
+++++++
+* `azdev extension show`: Show detailed extension info that installed in your development environment.
+* `azdev extension cal-next-version`: Fix last stable version parser from index.json.
+
 0.1.70
 ++++++
 * Fix cmdcov issue(#455): remove tested_command.txt reference.

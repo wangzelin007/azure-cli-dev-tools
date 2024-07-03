@@ -258,6 +258,9 @@ helps['extension list'] = """
     short-summary: List what extensions are currently visible to your development environment.
 """
 
+helps['extension show'] = """
+    short-summary: Show detailed extension info that installed in your development environment.
+"""
 
 helps['extension publish'] = """
     short-summary: Build and publish an extension to a storage account.

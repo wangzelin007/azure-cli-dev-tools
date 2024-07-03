@@ -81,3 +81,16 @@ def get_whl_from_url(url, filename, tmp_dir, whl_cache=None):
                 f.write(chunk)
     whl_cache[url] = ext_file
     return ext_file
+
+
+def get_pkg_info_from_pkg_metafile(pkg_info_file):
+    mod_info = {}
+    with open(pkg_info_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.startswith("Name:"):
+                pkg_name = line.split(":")[-1].strip()
+                mod_info["pkg_name"] = pkg_name
+            if line.startswith("Version:"):
+                pkg_version = line.split(":")[-1].strip()
+                mod_info["pkg_version"] = pkg_version
+    return mod_info

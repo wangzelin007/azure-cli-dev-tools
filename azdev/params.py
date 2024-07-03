@@ -178,6 +178,9 @@ def load_arguments(self, _):
         c.argument('next_version_pre_tag', help='next version is stable or preview, if not provided, use current stable/preview tag')
         c.argument('next_version_segment_tag', help='used to modify actual major/minor/patch/pre, if provided, increment version as provided')
 
+    with ArgumentsContext(self, 'extension show') as c:
+        c.argument('mod_name', required=True, help='installed extension module name')
+
     with ArgumentsContext(self, 'cli create') as c:
         c.positional('mod_name', help='Name of the module to create.')
 

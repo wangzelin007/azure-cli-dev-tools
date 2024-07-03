@@ -138,6 +138,36 @@ def list_extensions():
     return results
 
 
+def show_extension(mod_name):
+    ext_paths = get_ext_repo_paths()
+    ext_mod_paths = [os.path.join(ext, "src", mod_name) for ext in ext_paths]
+    mod_install_path = find_files(ext_mod_paths, '*.*-info')
+
+    if not mod_install_path:
+        raise CLIError('extension not installed using azdev: {}'.format(mod_name))
+
+    if len(mod_install_path) > 1:
+        raise CLIError('extension {} duplicated, please specify extension name'.format(mod_name))
+
+    mod_install_dir = os.path.dirname(mod_install_path[0])
+    long_name = os.path.basename(mod_install_dir)
+    assert long_name == mod_name
+    mod_info = {
+        "name": mod_name,
+        "path": mod_install_dir
+    }
+    # extract pkg name from egg-info or dist-info folders
+    logger.debug("Extracting pkg info from %s...", mod_install_path[0])
+    meta_files = ["PKG-INFO", "METADATA"]
+    pkg_info_path = [os.path.join(mod_install_path[0], meta) for meta in meta_files
+                     if os.path.isfile(os.path.join(mod_install_path[0], meta))]
+    from .util import get_pkg_info_from_pkg_metafile
+    for pkg_info_file in pkg_info_path:
+        pkg_info = get_pkg_info_from_pkg_metafile(pkg_info_file)
+        mod_info.update(pkg_info)
+    return mod_info
+
+
 def _get_sha256sum(a_file):
     import hashlib
     sha256 = hashlib.sha256()
