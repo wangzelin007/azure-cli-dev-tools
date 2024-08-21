@@ -119,6 +119,15 @@ def normalize_para_types(para):
     normalize_para_type(type_bool_opts, "bool")
 
 
+def get_command_examples(command_info, command_meta):
+    example_items = []
+    if command_info and command_info.get("help", None) and hasattr(command_info["help"], "examples"):
+        for example_obj in command_info["help"].examples:
+            example_items.append({"name": example_obj.name, "text": example_obj.text})
+    if example_items:
+        command_meta["examples"] = example_items
+
+
 def gen_command_meta(command_info, with_help=False, with_example=False):
     stored_property_when_exist = ["confirmation", "supports_no_wait", "is_preview", "deprecate_info"]
     command_meta = {
@@ -129,15 +138,10 @@ def gen_command_meta(command_info, with_help=False, with_example=False):
         if command_info.get(prop, None):
             command_meta[prop] = command_info[prop]
     if with_example:
-        try:
-            command_meta["examples"] = command_info["help"]["examples"]
-        except AttributeError:
-            pass
+        get_command_examples(command_info, command_meta)
     if with_help:
-        try:
-            command_meta["desc"] = command_info["help"]["short-summary"]
-        except AttributeError:
-            pass
+        if command_info.get("help", None) and hasattr(command_info["help"], "short_summary"):
+            command_meta["desc"] = command_info["help"].short_summary
     parameters = []
     for _, argument in command_info["arguments"].items():
         if argument.type is None:
@@ -163,13 +167,15 @@ def gen_command_meta(command_info, with_help=False, with_example=False):
             para["id_part"] = settings["id_part"]
         if settings.get("nargs", None):
             para["nargs"] = settings["nargs"]
+        if settings.get("completer", None):
+            para["has_completer"] = True
         if settings.get("default", None):
             if not isinstance(settings["default"], (float, int, str, list, bool)):
                 para["default"] = str(settings["default"])
             else:
                 para["default"] = settings["default"]
         if with_help:
-            para["desc"] = settings["help"]
+            para["desc"] = settings.get("help", "")
         if command_info["is_aaz"] and command_info["az_arguments_schema"]:
             process_aaz_argument(command_info["az_arguments_schema"], settings, para)
         normalize_para_types(para)

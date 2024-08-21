@@ -4,7 +4,7 @@
 # license information.
 # -----------------------------------------------------------------------------
 
-# pylint: disable=no-else-return, too-many-nested-blocks
+# pylint: disable=no-else-return, too-many-nested-blocks, too-many-locals, too-many-branches
 
 import time
 
@@ -72,6 +72,16 @@ def export_command_meta(modules=None, git_source=None, git_target=None, git_repo
     display('Commands loaded in {} sec'.format(stop - start))
     command_loader = az_cli.invocation.commands_loader
 
+    from azure.cli.core.file_util import get_all_help
+
+    help_info = {}
+    if with_help or with_example:
+        help_files = get_all_help(az_cli)
+        for help_item in help_files:
+            if not help_item.command:
+                continue
+            help_info[help_item.command] = help_item
+
     # trim command table to selected_modules
     command_loader = filter_modules(command_loader, modules=selected_mod_names)
 
@@ -85,7 +95,7 @@ def export_command_meta(modules=None, git_source=None, git_target=None, git_repo
             "name": command_name,
             "source": _get_command_source(command_name, command),
             "is_aaz": False,
-            "help": command.help,
+            "help": help_info[command_name] if command_name in help_info else None,
             "confirmation": command.confirmation is True,
             "arguments": [],
             "az_arguments_schema": None,
