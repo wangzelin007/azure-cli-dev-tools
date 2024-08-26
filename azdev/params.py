@@ -100,6 +100,35 @@ def load_arguments(self, _):
                         'Defaults to "high".')
     # endregion
 
+    # region scan & mask
+    for scope in ['scan', 'mask']:
+        with ArgumentsContext(self, scope) as c:
+            c.argument('file_path', options_list=['--file-path', '-f'],
+                       help='Path of the file you want to scan secrets for')
+            c.argument('directory_path', options_list=['--directory-path', '-d'],
+                       help='Path of the folder you want to scan secrets for')
+            c.argument('recursive', options_list=['--recursive', '-r'],
+                       help='Scan the directory recursively')
+            c.argument('data', help='Raw string you want to scan secrets for')
+            c.argument('save_scan_result', options_list=['--save-scan-result', '--save'], type=bool,
+                       help='Whether to save scan result to file or not')
+            c.argument('scan_result_path', options_list=['--scan-result-path', '--result'],
+                       help='Path for the file you want to save the result in. '
+                            'If specified, --save-scan-result will be True anyway. '
+                            'If not speficied but set --save-scan-result to True, '
+                            'the file will be saved as `scan_result_xxx.json` in your `.azdev` directory ')
+            c.argument('custom_pattern',
+                       help='Additional patterns you want to apply or built-in patterns you want to exclude '
+                            'for scanning. Can be json string or path to the json file.')
+
+    with ArgumentsContext(self, 'mask') as c:
+        c.argument('yes', options_list=['--yes', '-y'], action='store_true', help='Answer "yes" to all prompts.')
+        c.argument('redaction_type', options_list=['--redaction-type', '--type'],
+                   choices=['FIXED_VALUE', 'FIXED_LENGTH', 'SECRET_NAME', 'CUSTOM'])
+        c.argument('saved_scan_result_path', options_list=['--saved-scan-result-path', '--saved-result'],
+                   help='Path of the file you saved the scan result in')
+    # endregion
+
     # region statistics
     with ArgumentsContext(self, 'statistics') as c:
         c.argument('include_whl_extensions',

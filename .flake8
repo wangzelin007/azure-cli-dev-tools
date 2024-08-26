@@ -9,6 +9,9 @@ ignore =
     C901,
     W503,
     W504
+per-file-ignores =
+    azdev/help.py:W605
+    azdev/operations/tests/test_scan_and_mask.py:W605
 
 exclude = 
     mod_templates

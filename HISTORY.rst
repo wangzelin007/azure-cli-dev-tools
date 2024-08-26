@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.74
+++++++
+* `azdev scan/mask`: New commands for scanning and masking secrets for files or string
+
 0.1.73
 ++++++
 * `azdev command-change meta-export`: Add `has_completer` to denote whether completer is configed in arg

@@ -5,6 +5,7 @@
 # -----------------------------------------------------------------------------
 
 from knack.help_files import helps
+# pylint: disable=line-too-long, anomalous-backslash-in-string
 
 
 helps[''] = """
@@ -157,6 +158,51 @@ helps['linter'] = """
     examples:
         - name: Check linter rules for only those modules which have changed based on a git diff.
           text: azdev linter --repo azure-cli --tgt upstream/master --src upstream/dev
+"""
+
+helps['scan'] = """
+    short-summary: Scan secrets for files or string
+    long-summary: Check built-in scanning rules at https://github.com/microsoft/security-utilities/blob/main/GeneratedRegexPatterns/PreciselyClassifiedSecurityKeys.json
+    examples:
+        - name: Scan secrets for a single file with custom patterns
+          text: |
+                azdev scan --file-path my_file.yaml --custom-pattern my_pattern.json
+                ("my_pattern.json" contains the following content)
+                {
+                    "Include": [
+                        {
+                            "Pattern": "(?<refine>[\w.%#+-]+)(%40|@)([a-z0-9.-]*.[a-z]{2,})",
+                            "Name": "EmailAddress",
+                            "Signatures": ["%40", "@"]
+                        },
+                        {
+                            "Pattern": "(?<refine>[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12})",
+                            "Name": "GUID"
+                        }
+                    ],
+                    "Exclude": [
+                        {
+                            "Id": "SEC101/156",
+                            "Name": "AadClientAppIdentifiableCredentials",
+                        }
+                    ]
+                }
+        - name: Scan secrets for raw string and save results to file
+          text: |
+                azdev scan --data "my string waiting to be scanned" --save-scan-result True
+        - name: Recursively scan secrets for a directory and save results to specific file
+          text: |
+                azdev scan --directory-path /path/to/my/folder --recursive --scan-result-path /path/to/scan_result.json
+"""
+
+helps['mask'] = """
+    short-summary: Mask secrets for files or string
+    long-summary: |
+                Redaction type 'FIXED_VALUE' will mask all secrets with '***'.
+                Redaction type 'FIXED_LENGTH' will mask secrets with several '*'s which will keep the original secret length.
+                Redaction type 'SECRET_NAME' redaction type will mask secrets with their secret name (type).
+                Redaction type 'CUSTOM' will mask secrets with 'redaction_token' value you specify through saved scan result file.
+                Check built-in scanning rules at https://github.com/microsoft/security-utilities/blob/main/GeneratedRegexPatterns/PreciselyClassifiedSecurityKeys.json
 """
 
 helps['statistics'] = """
