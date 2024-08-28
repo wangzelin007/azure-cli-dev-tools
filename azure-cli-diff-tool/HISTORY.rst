@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.0.8
+++++++
+* Set `deepDiff` un-breaking version
+
 0.0.7
 ++++++
 * Remove unnecessary debug logs for meta comparison
