@@ -123,6 +123,10 @@ class VersionUpgradeMod:
                 self.next_version.init_preview_version()
             return
 
+        if self.next_version_pre_tag == VERSION_STABLE_TAG and self.is_preview:
+            # 2.0.0bN -> stable > 2.0.0
+            return
+
         if self.next_version_segment_tag:
             if self.next_version_segment_tag == VERSION_MAJOR_TAG:
                 self.next_version.major = self.version.major + 1

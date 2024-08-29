@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.76
+++++++
+* `azdev extension cal-next-version`: Fix preview to stable version case.
+
 0.1.75
 ++++++
 * `azdev scan/mask`: Add `--include-pattern` and `--exclude-pattern` to support filtering files within directory
