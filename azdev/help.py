@@ -193,6 +193,9 @@ helps['scan'] = """
         - name: Recursively scan secrets for a directory and save results to specific file
           text: |
                 azdev scan --directory-path /path/to/my/folder --recursive --scan-result-path /path/to/scan_result.json
+        - name: Scan secrets for all json files and yaml files within a directory
+          text: |
+                azdev scan --directory-path /path/to/my/folder --include-pattern *.yaml *.json
 """
 
 helps['mask'] = """

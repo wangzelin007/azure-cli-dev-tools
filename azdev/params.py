@@ -109,14 +109,22 @@ def load_arguments(self, _):
                        help='Path of the folder you want to scan secrets for')
             c.argument('recursive', options_list=['--recursive', '-r'],
                        help='Scan the directory recursively')
+            c.argument('include_pattern', options_list=['--include-pattern', '--include'], nargs='*',
+                       help="Space separated patterns used for files you want to include within the directory. "
+                            "The supported patterns are '*', '?', '[seq]', and '[!seq]'. "
+                            "For more information, please refer to https://docs.python.org/3/library/fnmatch.html")
+            c.argument('exclude_pattern', options_list=['--exclude-pattern', '--exclude'], nargs='*',
+                       help="Space separated patterns used for files you want to exclude within the directory. "
+                            "The supported patterns are '*', '?', '[seq]', and '[!seq]'. "
+                            "For more information, please refer to https://docs.python.org/3/library/fnmatch.html")
             c.argument('data', help='Raw string you want to scan secrets for')
-            c.argument('save_scan_result', options_list=['--save-scan-result', '--save'], type=bool,
+            c.argument('save_scan_result', options_list=['--save-scan-result', '--save'], action='store_true',
                        help='Whether to save scan result to file or not')
             c.argument('scan_result_path', options_list=['--scan-result-path', '--result'],
                        help='Path for the file you want to save the result in. '
                             'If specified, --save-scan-result will be True anyway. '
                             'If not speficied but set --save-scan-result to True, '
-                            'the file will be saved as `scan_result_xxx.json` in your `.azdev` directory ')
+                            'the file will be saved as `scan_result_YYYYmmddHHMMSS.json` in your `.azdev` directory ')
             c.argument('custom_pattern',
                        help='Additional patterns you want to apply or built-in patterns you want to exclude '
                             'for scanning. Can be json string or path to the json file.')

@@ -136,6 +136,16 @@ class TestScanAndMaskSecrets(unittest.TestCase):
         self.assertEqual(len(result['scan_results'][info_json_file]), 1)
         self.assertEqual(result['scan_results'][info_json_file][0]['secret_name'], 'EmailAddress')
 
+        result = scan_secrets(directory_path=file_folder, recursive=True, include_pattern=['*.json'], custom_pattern=json.dumps(custom_pattern))
+        self.assertTrue(result['secrets_detected'])
+        self.assertNotIn(email_string_file, result['scan_results'])
+        self.assertIn(info_json_file, result['scan_results'])
+
+        result = scan_secrets(directory_path=file_folder, recursive=True, exclude_pattern=['*.json'], custom_pattern=json.dumps(custom_pattern))
+        self.assertTrue(result['secrets_detected'])
+        self.assertIn(email_string_file, result['scan_results'])
+        self.assertNotIn(info_json_file, result['scan_results'])
+
     def test_mask(self):
         test_data = "This is a test string with email fooabc@gmail.com and sas sv=2022-11-02&sr=c&sig=a9Y5mpQgKUiiPzHFNdDm53Na6UndTrNMCsRZd6b2oV4%3D"
         result = mask_secrets(data=test_data, yes=True)

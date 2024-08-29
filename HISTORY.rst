@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.75
+++++++
+* `azdev scan/mask`: Add `--include-pattern` and `--exclude-pattern` to support filtering files within directory
+
 0.1.74
 ++++++
 * `azdev scan/mask`: New commands for scanning and masking secrets for files or string
