@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.77
+++++++
+* `azdev extension cal-next-version`: Fix pre_num when tagged preview version with `major`, `minor`, `patch`.
+
 0.1.76
 ++++++
 * `azdev extension cal-next-version`: Fix preview to stable version case.

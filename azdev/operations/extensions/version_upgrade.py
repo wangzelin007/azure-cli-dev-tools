@@ -132,13 +132,16 @@ class VersionUpgradeMod:
                 self.next_version.major = self.version.major + 1
                 self.next_version.minor = 0
                 self.next_version.patch = 0
+                self.next_version.pre_num = 1
             elif self.next_version_segment_tag == VERSION_MINOR_TAG:
                 self.next_version.minor = self.version.minor + 1
                 self.next_version.patch = 0
+                self.next_version.pre_num = 1
             elif self.next_version_segment_tag == VERSION_PATCH_TAG:
                 self.next_version.patch = self.version.micro + 1
+                self.next_version.pre_num = 1
             elif self.next_version_segment_tag == VERSION_PRE_TAG:
-                self.next_version.patch = (self.version.pre and self.version.pre[1] or 0) + 1
+                self.next_version.pre_num = (self.version.pre and self.version.pre[1] or 0) + 1
             else:
                 raise ValueError("Unsupported segment tag: {0}".format(self.next_version_segment_tag))
             return
@@ -159,6 +162,8 @@ class VersionUpgradeMod:
                 self.next_version.major = self.version.major + 1
                 self.next_version.minor = 0
                 self.next_version.patch = 0
+                if self.is_preview:
+                    self.next_version.pre_num = 1
         elif len(self.diffs) > 0:
             if self.is_preview:
                 self.next_version.pre_num = self.version.pre[1] + 1
