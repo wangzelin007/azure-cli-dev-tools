@@ -11,7 +11,7 @@ from azdev.operations.command_change import export_command_meta, cmp_command_met
 from azdev.operations.command_change.util import get_command_tree, add_to_command_tree
 
 
-class MyTestCase(unittest.TestCase):
+class BreakingChangeTestCase(unittest.TestCase):
 
     def test_cmd_meta_generation(self):
         if os.path.exists("./jsons/az_monitor_meta.json"):

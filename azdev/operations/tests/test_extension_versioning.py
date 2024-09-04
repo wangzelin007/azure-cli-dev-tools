@@ -6,12 +6,13 @@
 
 
 import unittest
+from unittest.mock import patch
 import os
-from azdev.operations.extensions import cal_next_version
+from azdev.operations.extensions import cal_next_version, VersionUpgradeMod
 TEST_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-class MyTestCase(unittest.TestCase):
+class ExtensionVersioningTestCase(unittest.TestCase):
 
     def test_version_upgrade_major(self):
         # stable version update major
@@ -130,8 +131,13 @@ class MyTestCase(unittest.TestCase):
                                         current_version="3.11.0")
         self.assertEqual("3.11.1", version_test.get("version"), "Version cal error")
 
-    def test_version_upgrade_preview_break(self):
+    @patch.object(VersionUpgradeMod, 'find_max_version')
+    def test_version_upgrade_preview_break(self, find_max_version):
         # preview version update while no stable version before or stable version already lower in major
+        def config_last_stable_version(_):
+            return False, -1
+
+        find_max_version.side_effect = config_last_stable_version
         version_test = cal_next_version(base_meta_file=os.path.join(TEST_DIR, "jsons",
                                                                     "az_costmanagement_meta_before.json"),
                                         diff_meta_file=os.path.join(TEST_DIR, "jsons",
