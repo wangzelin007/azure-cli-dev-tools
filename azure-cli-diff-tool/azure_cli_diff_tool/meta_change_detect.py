@@ -5,6 +5,7 @@
 # -----------------------------------------------------------------------------
 
 import logging
+import requests
 import os.path
 
 from .utils import get_command_tree, ChangeType, extract_cmd_name, extract_subgroup_name, extract_subgroup_property, \
@@ -22,6 +23,7 @@ from ._const import (SUBGROUP_PROPERTY_ADD_BREAK_LIST, SUBGROUP_PROPERTY_ADD_WAR
                      PARA_PROPERTY_ADD_BREAK_LIST, PARA_PROPERTY_ADD_WARN_LIST,
                      PARA_PROPERTY_UPDATE_BREAK_LIST, PARA_PROPERTY_UPDATE_WARN_LIST,
                      CMD_REMOVE_SUFFIX_WARN_LIST,
+                     META_CHANDE_WHITELIST_FILE_URL,
                      META_CHANDE_WHITELIST_FILE_PATH)
 
 logger = logging.getLogger(__name__)
@@ -53,13 +55,23 @@ class MetaChangeDetect:
         self.__get_meta_change_whitelist__()
 
     def __get_meta_change_whitelist__(self):
-        if not os.path.exists(META_CHANDE_WHITELIST_FILE_PATH):
-            logger.info("meta_change_whitelist.txt not exist, skipped")
-            return
-        with open(META_CHANDE_WHITELIST_FILE_PATH, "r") as f_in:
-            for line in f_in:
+        remote_res = requests.get(META_CHANDE_WHITELIST_FILE_URL)
+        if remote_res.status_code != 200:
+            logger.warning("remote meta change whitelist fetch error, use local dict")
+            if not os.path.exists(META_CHANDE_WHITELIST_FILE_PATH):
+                logger.info("meta_change_whitelist.txt not exist, skipped")
+                return
+            with open(META_CHANDE_WHITELIST_FILE_PATH, "r") as f_in:
+                for line in f_in:
+                    white_key = line.rstrip()
+                    self.meta_change_whitelist.add(white_key)
+        else:
+            logger.info("remote meta change whitelist fetch success")
+            content = remote_res.text
+            for line in content.split("\n"):
                 white_key = line.rstrip()
                 self.meta_change_whitelist.add(white_key)
+
 
     @staticmethod
     def __search_cmd_obj(cmd_name, search_meta):

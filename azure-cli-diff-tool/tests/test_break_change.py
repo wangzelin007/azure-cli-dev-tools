@@ -12,7 +12,7 @@ from azure_cli_diff_tool.utils import get_command_tree, extract_cmd_name, extrac
     extract_subgroup_name, extract_subgroup_deprecate_property, expand_deprecate_obj, extract_subgroup_property
 
 
-class MyTestCase(unittest.TestCase):
+class CLIDiffToolTestCase(unittest.TestCase):
 
     def test_parse_cmd_tree(self):
         cmd_name = "monitor log-profiles create"
@@ -102,6 +102,15 @@ class MyTestCase(unittest.TestCase):
             return
         result = meta_diff(base_meta_file="./jsons/az_ams_meta_before.json",
                            diff_meta_file="./jsons/az_ams_meta_after.json",
+                           output_type="text")
+        self.assertEqual(result, [], "returned change isn't empty")
+
+    def test_dynamic_diff_meta_whitelist(self):
+        if not os.path.exists("./jsons/az_mysql_meta_before.json") \
+                or not os.path.exists("./jsons/az_mysql_meta_after.json"):
+            return
+        result = meta_diff(base_meta_file="./jsons/az_mysql_meta_before.json",
+                           diff_meta_file="./jsons/az_mysql_meta_after.json",
                            output_type="text")
         self.assertEqual(result, [], "returned change isn't empty")
 

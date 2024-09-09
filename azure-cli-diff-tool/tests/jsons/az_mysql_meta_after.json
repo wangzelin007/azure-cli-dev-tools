@@ -1,0 +1,1795 @@
+{
+    "module_name": "mysql",
+    "name": "az",
+    "commands": {},
+    "sub_groups": {
+        "mysql": {
+            "name": "mysql",
+            "commands": {},
+            "sub_groups": {
+                "mysql flexible-server": {
+                    "name": "mysql flexible-server",
+                    "commands": {
+                        "mysql flexible-server create": {
+                            "name": "mysql flexible-server create",
+                            "is_aaz": true,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "id_part": "name"
+                            }, {
+                                "name": "location",
+                                "options": ["--location", "-l"],
+                                "type": "custom_type",
+                                "has_completer": true
+                            }, {
+                                "name": "backup_retention",
+                                "options": ["--backup-retention"],
+                                "type": "int",
+                                "default": 7
+                            }, {
+                                "name": "sku_name",
+                                "options": ["--sku-name"],
+                                "default": "Standard_B1ms"
+                            }, {
+                                "name": "tier",
+                                "options": ["--tier"],
+                                "default": "Burstable"
+                            }, {
+                                "name": "storage_gb",
+                                "options": ["--storage-size"],
+                                "type": "int",
+                                "default": "32"
+                            }, {
+                                "name": "administrator_login",
+                                "options": ["--admin-user", "-u"],
+                                "default": "sorryostrich5"
+                            }, {
+                                "name": "administrator_login_password",
+                                "options": ["--admin-password", "-p"]
+                            }, {
+                                "name": "version",
+                                "options": ["--version"],
+                                "default": "5.7"
+                            }, {
+                                "name": "tags",
+                                "options": ["--tags"],
+                                "nargs": "*"
+                            }, {
+                                "name": "database_name",
+                                "options": ["--database-name", "-d"],
+                                "id_part": "child_name_1"
+                            }, {
+                                "name": "subnet",
+                                "options": ["--subnet"]
+                            }, {
+                                "name": "subnet_address_prefix",
+                                "options": ["--subnet-prefixes"]
+                            }, {
+                                "name": "vnet",
+                                "options": ["--vnet"]
+                            }, {
+                                "name": "vnet_address_prefix",
+                                "options": ["--address-prefixes"]
+                            }, {
+                                "name": "private_dns_zone_arguments",
+                                "options": ["--private-dns-zone"]
+                            }, {
+                                "name": "public_access",
+                                "options": ["--public-access"]
+                            }, {
+                                "name": "high_availability",
+                                "options": ["--high-availability"],
+                                "choices": ["Disabled", "SameZone", "ZoneRedundant"],
+                                "default": "Disabled"
+                            }, {
+                                "name": "zone",
+                                "options": ["--zone", "-z"]
+                            }, {
+                                "name": "standby_availability_zone",
+                                "options": ["--standby-zone"]
+                            }, {
+                                "name": "iops",
+                                "options": ["--iops"],
+                                "type": "int"
+                            }, {
+                                "name": "auto_grow",
+                                "options": ["--storage-auto-grow"],
+                                "choices": ["Disabled", "Enabled"],
+                                "default": "Enabled"
+                            }, {
+                                "name": "auto_scale_iops",
+                                "options": ["--auto-scale-iops"],
+                                "choices": ["Disabled", "Enabled"],
+                                "default": "Disabled"
+                            }, {
+                                "name": "geo_redundant_backup",
+                                "options": ["--geo-redundant-backup"],
+                                "choices": ["Disabled", "Enabled"],
+                                "default": "Disabled"
+                            }, {
+                                "name": "byok_identity",
+                                "options": ["--identity"]
+                            }, {
+                                "name": "backup_byok_identity",
+                                "options": ["--backup-identity"]
+                            }, {
+                                "name": "byok_key",
+                                "options": ["--key"]
+                            }, {
+                                "name": "backup_byok_key",
+                                "options": ["--backup-key"]
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }]
+                        },
+                        "mysql flexible-server restore": {
+                            "name": "mysql flexible-server restore",
+                            "is_aaz": true,
+                            "supports_no_wait": true,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "source_server",
+                                "options": ["--source-server"],
+                                "required": true
+                            }, {
+                                "name": "restore_point_in_time",
+                                "options": ["--restore-time"],
+                                "default": "2024-09-06T10:06:45+00:00"
+                            }, {
+                                "name": "zone",
+                                "options": ["--zone", "-z"]
+                            }, {
+                                "name": "subnet",
+                                "options": ["--subnet"]
+                            }, {
+                                "name": "subnet_address_prefix",
+                                "options": ["--subnet-prefixes"]
+                            }, {
+                                "name": "vnet",
+                                "options": ["--vnet"]
+                            }, {
+                                "name": "vnet_address_prefix",
+                                "options": ["--address-prefixes"]
+                            }, {
+                                "name": "private_dns_zone_arguments",
+                                "options": ["--private-dns-zone"]
+                            }, {
+                                "name": "public_access",
+                                "options": ["--public-access"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }, {
+                                "name": "sku_name",
+                                "options": ["--sku-name"]
+                            }, {
+                                "name": "tier",
+                                "options": ["--tier"]
+                            }, {
+                                "name": "storage_gb",
+                                "options": ["--storage-size"],
+                                "type": "int"
+                            }, {
+                                "name": "auto_grow",
+                                "options": ["--storage-auto-grow"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "backup_retention",
+                                "options": ["--backup-retention"],
+                                "type": "int"
+                            }, {
+                                "name": "geo_redundant_backup",
+                                "options": ["--geo-redundant-backup"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "tags",
+                                "options": ["--tags"],
+                                "nargs": "*"
+                            }, {
+                                "name": "no_wait",
+                                "options": ["--no-wait"]
+                            }]
+                        },
+                        "mysql flexible-server geo-restore": {
+                            "name": "mysql flexible-server geo-restore",
+                            "is_aaz": true,
+                            "supports_no_wait": true,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "source_server",
+                                "options": ["--source-server"],
+                                "required": true
+                            }, {
+                                "name": "location",
+                                "options": ["--location", "-l"],
+                                "type": "custom_type",
+                                "required": true,
+                                "has_completer": true
+                            }, {
+                                "name": "zone",
+                                "options": ["--zone", "-z"]
+                            }, {
+                                "name": "subnet",
+                                "options": ["--subnet"]
+                            }, {
+                                "name": "subnet_address_prefix",
+                                "options": ["--subnet-prefixes"]
+                            }, {
+                                "name": "vnet",
+                                "options": ["--vnet"]
+                            }, {
+                                "name": "vnet_address_prefix",
+                                "options": ["--address-prefixes"]
+                            }, {
+                                "name": "tags",
+                                "options": ["--tags"],
+                                "nargs": "*"
+                            }, {
+                                "name": "private_dns_zone_arguments",
+                                "options": ["--private-dns-zone"]
+                            }, {
+                                "name": "public_access",
+                                "options": ["--public-access"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }, {
+                                "name": "sku_name",
+                                "options": ["--sku-name"]
+                            }, {
+                                "name": "tier",
+                                "options": ["--tier"]
+                            }, {
+                                "name": "storage_gb",
+                                "options": ["--storage-size"],
+                                "type": "int"
+                            }, {
+                                "name": "auto_grow",
+                                "options": ["--storage-auto-grow"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "backup_retention",
+                                "options": ["--backup-retention"],
+                                "type": "int"
+                            }, {
+                                "name": "geo_redundant_backup",
+                                "options": ["--geo-redundant-backup"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "no_wait",
+                                "options": ["--no-wait"]
+                            }]
+                        },
+                        "mysql flexible-server start": {
+                            "name": "mysql flexible-server start",
+                            "is_aaz": false,
+                            "supports_no_wait": true,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "no_wait",
+                                "options": ["--no-wait"]
+                            }]
+                        },
+                        "mysql flexible-server stop": {
+                            "name": "mysql flexible-server stop",
+                            "is_aaz": false,
+                            "supports_no_wait": true,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "id_part": "name"
+                            }, {
+                                "name": "no_wait",
+                                "options": ["--no-wait"]
+                            }]
+                        },
+                        "mysql flexible-server delete": {
+                            "name": "mysql flexible-server delete",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }]
+                        },
+                        "mysql flexible-server show": {
+                            "name": "mysql flexible-server show",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }]
+                        },
+                        "mysql flexible-server list": {
+                            "name": "mysql flexible-server list",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }]
+                        },
+                        "mysql flexible-server update": {
+                            "name": "mysql flexible-server update",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "sku_name",
+                                "options": ["--sku-name"]
+                            }, {
+                                "name": "tier",
+                                "options": ["--tier"]
+                            }, {
+                                "name": "storage_gb",
+                                "options": ["--storage-size"],
+                                "type": "int"
+                            }, {
+                                "name": "auto_grow",
+                                "options": ["--storage-auto-grow"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "iops",
+                                "options": ["--iops"],
+                                "type": "int"
+                            }, {
+                                "name": "auto_scale_iops",
+                                "options": ["--auto-scale-iops"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "backup_retention",
+                                "options": ["--backup-retention"],
+                                "type": "int"
+                            }, {
+                                "name": "geo_redundant_backup",
+                                "options": ["--geo-redundant-backup"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "administrator_login_password",
+                                "options": ["--admin-password", "-p"]
+                            }, {
+                                "name": "high_availability",
+                                "options": ["--high-availability"],
+                                "choices": ["Disabled", "SameZone", "ZoneRedundant"]
+                            }, {
+                                "name": "standby_availability_zone",
+                                "options": ["--standby-zone"]
+                            }, {
+                                "name": "maintenance_window",
+                                "options": ["--maintenance-window"]
+                            }, {
+                                "name": "tags",
+                                "options": ["--tags"],
+                                "nargs": "*"
+                            }, {
+                                "name": "replication_role",
+                                "options": ["--replication-role"]
+                            }, {
+                                "name": "byok_identity",
+                                "options": ["--identity"]
+                            }, {
+                                "name": "backup_byok_identity",
+                                "options": ["--backup-identity"]
+                            }, {
+                                "name": "byok_key",
+                                "options": ["--key"]
+                            }, {
+                                "name": "backup_byok_key",
+                                "options": ["--backup-key"]
+                            }, {
+                                "name": "disable_data_encryption",
+                                "options": ["--disable-data-encryption"],
+                                "choices": ["false", "true"],
+                                "nargs": "?"
+                            }, {
+                                "name": "public_access",
+                                "options": ["--public-access"],
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "properties_to_set",
+                                "options": ["--set"],
+                                "nargs": "+"
+                            }, {
+                                "name": "properties_to_add",
+                                "options": ["--add"],
+                                "nargs": "+"
+                            }, {
+                                "name": "properties_to_remove",
+                                "options": ["--remove"],
+                                "nargs": "+"
+                            }, {
+                                "name": "force_string",
+                                "options": ["--force-string"]
+                            }]
+                        },
+                        "mysql flexible-server upgrade": {
+                            "name": "mysql flexible-server upgrade",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "version",
+                                "options": ["--version", "-v"],
+                                "required": true,
+                                "choices": ["8"]
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }]
+                        },
+                        "mysql flexible-server wait": {
+                            "name": "mysql flexible-server wait",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "timeout",
+                                "options": ["--timeout"],
+                                "type": "int",
+                                "default": 3600
+                            }, {
+                                "name": "interval",
+                                "options": ["--interval"],
+                                "type": "int",
+                                "default": 30
+                            }, {
+                                "name": "deleted",
+                                "options": ["--deleted"]
+                            }, {
+                                "name": "created",
+                                "options": ["--created"]
+                            }, {
+                                "name": "updated",
+                                "options": ["--updated"]
+                            }, {
+                                "name": "exists",
+                                "options": ["--exists"]
+                            }, {
+                                "name": "custom",
+                                "options": ["--custom"]
+                            }]
+                        },
+                        "mysql flexible-server restart": {
+                            "name": "mysql flexible-server restart",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "fail_over",
+                                "options": ["--failover"]
+                            }]
+                        },
+                        "mysql flexible-server detach-vnet": {
+                            "name": "mysql flexible-server detach-vnet",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "resource_group_name",
+                                "options": ["--resource-group", "-g"],
+                                "required": true,
+                                "id_part": "resource_group",
+                                "has_completer": true
+                            }, {
+                                "name": "server_name",
+                                "options": ["--name", "-n"],
+                                "required": true,
+                                "id_part": "name"
+                            }, {
+                                "name": "public_network_access",
+                                "options": ["--public-network-access"],
+                                "required": true,
+                                "choices": ["Disabled", "Enabled"]
+                            }, {
+                                "name": "yes",
+                                "options": ["--yes", "-y"]
+                            }]
+                        },
+                        "mysql flexible-server list-skus": {
+                            "name": "mysql flexible-server list-skus",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "location",
+                                "options": ["--location", "-l"],
+                                "type": "custom_type",
+                                "required": true,
+                                "has_completer": true
+                            }]
+                        },
+                        "mysql flexible-server show-connection-string": {
+                            "name": "mysql flexible-server show-connection-string",
+                            "is_aaz": false,
+                            "parameters": [{
+                                "name": "server_name",
+                                "options": ["--server-name", "-s"],
+                                "id_part": "name",
+                                "default": "{server}"
+                            }, {
+                                "name": "database_name",
+                                "options": ["--database-name", "-d"],
+                                "id_part": "child_name_1",
+                                "default": "{database}"
+                            }, {
+                                "name": "administrator_login",
+                                "options": ["--admin-user", "-u"],
+                                "default": "{login}"
+                            }, {
+                                "name": "administrator_login_password",
+                                "options": ["--admin-password", "-p"],
+                                "default": "{password}"
+                            }]
+                        }
+                    },
+                    "sub_groups": {
+                        "mysql flexible-server advanced-threat-protection-setting": {
+                            "name": "mysql flexible-server advanced-threat-protection-setting",
+                            "commands": {
+                                "mysql flexible-server advanced-threat-protection-setting update": {
+                                    "name": "mysql flexible-server advanced-threat-protection-setting update",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "state",
+                                        "options": ["--state"],
+                                        "required": true,
+                                        "choices": ["Disabled", "Enabled"]
+                                    }]
+                                },
+                                "mysql flexible-server advanced-threat-protection-setting show": {
+                                    "name": "mysql flexible-server advanced-threat-protection-setting show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server import": {
+                            "name": "mysql flexible-server import",
+                            "commands": {
+                                "mysql flexible-server import create": {
+                                    "name": "mysql flexible-server import create",
+                                    "is_aaz": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "data_source_type",
+                                        "options": ["--data-source-type"],
+                                        "required": true,
+                                        "choices": ["azure_blob", "mysql_single"]
+                                    }, {
+                                        "name": "data_source",
+                                        "options": ["--data-source"],
+                                        "required": true
+                                    }, {
+                                        "name": "mode",
+                                        "options": ["--mode"],
+                                        "choices": ["Offline", "Online"],
+                                        "default": "Offline"
+                                    }, {
+                                        "name": "data_source_sas_token",
+                                        "options": ["--data-source-sas-token"]
+                                    }, {
+                                        "name": "data_source_backup_dir",
+                                        "options": ["--data-source-backup-dir"]
+                                    }, {
+                                        "name": "location",
+                                        "options": ["--location", "-l"],
+                                        "type": "custom_type",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "backup_retention",
+                                        "options": ["--backup-retention"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "sku_name",
+                                        "options": ["--sku-name"]
+                                    }, {
+                                        "name": "tier",
+                                        "options": ["--tier"]
+                                    }, {
+                                        "name": "storage_gb",
+                                        "options": ["--storage-size"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "administrator_login",
+                                        "options": ["--admin-user", "-u"]
+                                    }, {
+                                        "name": "administrator_login_password",
+                                        "options": ["--admin-password", "-p"]
+                                    }, {
+                                        "name": "version",
+                                        "options": ["--version"]
+                                    }, {
+                                        "name": "tags",
+                                        "options": ["--tags"],
+                                        "nargs": "*"
+                                    }, {
+                                        "name": "subnet",
+                                        "options": ["--subnet"]
+                                    }, {
+                                        "name": "subnet_address_prefix",
+                                        "options": ["--subnet-prefixes"]
+                                    }, {
+                                        "name": "vnet",
+                                        "options": ["--vnet"]
+                                    }, {
+                                        "name": "vnet_address_prefix",
+                                        "options": ["--address-prefixes"]
+                                    }, {
+                                        "name": "private_dns_zone_arguments",
+                                        "options": ["--private-dns-zone"]
+                                    }, {
+                                        "name": "public_access",
+                                        "options": ["--public-access"]
+                                    }, {
+                                        "name": "high_availability",
+                                        "options": ["--high-availability"],
+                                        "choices": ["Disabled", "SameZone", "ZoneRedundant"],
+                                        "default": "Disabled"
+                                    }, {
+                                        "name": "zone",
+                                        "options": ["--zone", "-z"]
+                                    }, {
+                                        "name": "standby_availability_zone",
+                                        "options": ["--standby-zone"]
+                                    }, {
+                                        "name": "iops",
+                                        "options": ["--iops"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "auto_grow",
+                                        "options": ["--storage-auto-grow"],
+                                        "choices": ["Disabled", "Enabled"]
+                                    }, {
+                                        "name": "auto_scale_iops",
+                                        "options": ["--auto-scale-iops"],
+                                        "choices": ["Disabled", "Enabled"],
+                                        "default": "Disabled"
+                                    }, {
+                                        "name": "geo_redundant_backup",
+                                        "options": ["--geo-redundant-backup"],
+                                        "choices": ["Disabled", "Enabled"]
+                                    }, {
+                                        "name": "byok_identity",
+                                        "options": ["--identity"]
+                                    }, {
+                                        "name": "backup_byok_identity",
+                                        "options": ["--backup-identity"]
+                                    }, {
+                                        "name": "byok_key",
+                                        "options": ["--key"]
+                                    }, {
+                                        "name": "backup_byok_key",
+                                        "options": ["--backup-key"]
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }]
+                                },
+                                "mysql flexible-server import stop-replication": {
+                                    "name": "mysql flexible-server import stop-replication",
+                                    "is_aaz": false,
+                                    "confirmation": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server firewall-rule": {
+                            "name": "mysql flexible-server firewall-rule",
+                            "commands": {
+                                "mysql flexible-server firewall-rule create": {
+                                    "name": "mysql flexible-server firewall-rule create",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "firewall_rule_name",
+                                        "options": ["--rule-name", "-r"],
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "start_ip_address",
+                                        "options": ["--start-ip-address"]
+                                    }, {
+                                        "name": "end_ip_address",
+                                        "options": ["--end-ip-address"]
+                                    }]
+                                },
+                                "mysql flexible-server firewall-rule delete": {
+                                    "name": "mysql flexible-server firewall-rule delete",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "firewall_rule_name",
+                                        "options": ["--rule-name", "-r"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }]
+                                },
+                                "mysql flexible-server firewall-rule show": {
+                                    "name": "mysql flexible-server firewall-rule show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "firewall_rule_name",
+                                        "options": ["--rule-name", "-r"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }]
+                                },
+                                "mysql flexible-server firewall-rule list": {
+                                    "name": "mysql flexible-server firewall-rule list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server firewall-rule update": {
+                                    "name": "mysql flexible-server firewall-rule update",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "firewall_rule_name",
+                                        "options": ["--rule-name", "-r"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "start_ip_address",
+                                        "options": ["--start-ip-address"]
+                                    }, {
+                                        "name": "end_ip_address",
+                                        "options": ["--end-ip-address"]
+                                    }, {
+                                        "name": "properties_to_set",
+                                        "options": ["--set"],
+                                        "nargs": "+"
+                                    }, {
+                                        "name": "properties_to_add",
+                                        "options": ["--add"],
+                                        "nargs": "+"
+                                    }, {
+                                        "name": "properties_to_remove",
+                                        "options": ["--remove"],
+                                        "nargs": "+"
+                                    }, {
+                                        "name": "force_string",
+                                        "options": ["--force-string"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server parameter": {
+                            "name": "mysql flexible-server parameter",
+                            "commands": {
+                                "mysql flexible-server parameter set": {
+                                    "name": "mysql flexible-server parameter set",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "configuration_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "source",
+                                        "options": ["--source"]
+                                    }, {
+                                        "name": "value",
+                                        "options": ["--value", "-v"]
+                                    }]
+                                },
+                                "mysql flexible-server parameter set-batch": {
+                                    "name": "mysql flexible-server parameter set-batch",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "source",
+                                        "options": ["--source"]
+                                    }, {
+                                        "name": "configuration_list",
+                                        "options": ["--args"],
+                                        "required": true,
+                                        "nargs": "*"
+                                    }]
+                                },
+                                "mysql flexible-server parameter show": {
+                                    "name": "mysql flexible-server parameter show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "configuration_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }]
+                                },
+                                "mysql flexible-server parameter list": {
+                                    "name": "mysql flexible-server parameter list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "tags",
+                                        "options": ["--tags"]
+                                    }, {
+                                        "name": "keyword",
+                                        "options": ["--keyword"]
+                                    }, {
+                                        "name": "page",
+                                        "options": ["--page"]
+                                    }, {
+                                        "name": "page_size",
+                                        "options": ["--page-size"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server db": {
+                            "name": "mysql flexible-server db",
+                            "commands": {
+                                "mysql flexible-server db create": {
+                                    "name": "mysql flexible-server db create",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "database_name",
+                                        "options": ["--database-name", "-d"],
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "charset",
+                                        "options": ["--charset"]
+                                    }, {
+                                        "name": "collation",
+                                        "options": ["--collation"]
+                                    }]
+                                },
+                                "mysql flexible-server db delete": {
+                                    "name": "mysql flexible-server db delete",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "database_name",
+                                        "options": ["--database-name", "-d"],
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }]
+                                },
+                                "mysql flexible-server db show": {
+                                    "name": "mysql flexible-server db show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "database_name",
+                                        "options": ["--database-name", "-d"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }]
+                                },
+                                "mysql flexible-server db list": {
+                                    "name": "mysql flexible-server db list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server replica": {
+                            "name": "mysql flexible-server replica",
+                            "commands": {
+                                "mysql flexible-server replica list": {
+                                    "name": "mysql flexible-server replica list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server replica create": {
+                                    "name": "mysql flexible-server replica create",
+                                    "is_aaz": true,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "source_server",
+                                        "options": ["--source-server"],
+                                        "required": true
+                                    }, {
+                                        "name": "replica_name",
+                                        "options": ["--replica-name"],
+                                        "required": true
+                                    }, {
+                                        "name": "location",
+                                        "options": ["--location", "-l"],
+                                        "type": "custom_type",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "tags",
+                                        "options": ["--tags"],
+                                        "nargs": "*"
+                                    }, {
+                                        "name": "sku_name",
+                                        "options": ["--sku-name"]
+                                    }, {
+                                        "name": "private_dns_zone_arguments",
+                                        "options": ["--private-dns-zone"]
+                                    }, {
+                                        "name": "vnet",
+                                        "options": ["--vnet"]
+                                    }, {
+                                        "name": "subnet",
+                                        "options": ["--subnet"]
+                                    }, {
+                                        "name": "zone",
+                                        "options": ["--zone", "-z"]
+                                    }, {
+                                        "name": "public_access",
+                                        "options": ["--public-access"],
+                                        "choices": ["Disabled", "Enabled"]
+                                    }, {
+                                        "name": "storage_gb",
+                                        "options": ["--storage-size"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "iops",
+                                        "options": ["--iops"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "geo_redundant_backup",
+                                        "options": ["--geo-redundant-backup"],
+                                        "choices": ["Disabled", "Enabled"]
+                                    }, {
+                                        "name": "backup_retention",
+                                        "options": ["--backup-retention"],
+                                        "type": "int"
+                                    }, {
+                                        "name": "tier",
+                                        "options": ["--tier"]
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                },
+                                "mysql flexible-server replica stop-replication": {
+                                    "name": "mysql flexible-server replica stop-replication",
+                                    "is_aaz": false,
+                                    "confirmation": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server deploy": {
+                            "name": "mysql flexible-server deploy",
+                            "commands": {
+                                "mysql flexible-server deploy setup": {
+                                    "name": "mysql flexible-server deploy setup",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "database_name",
+                                        "options": ["--database-name", "-d"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }, {
+                                        "name": "administrator_login",
+                                        "options": ["--admin-user", "-u"],
+                                        "required": true
+                                    }, {
+                                        "name": "administrator_login_password",
+                                        "options": ["--admin-password", "-p"],
+                                        "required": true
+                                    }, {
+                                        "name": "sql_file_path",
+                                        "options": ["--sql-file"],
+                                        "required": true
+                                    }, {
+                                        "name": "repository",
+                                        "options": ["--repo"],
+                                        "required": true
+                                    }, {
+                                        "name": "action_name",
+                                        "options": ["--action-name"]
+                                    }, {
+                                        "name": "branch",
+                                        "options": ["--branch"]
+                                    }, {
+                                        "name": "allow_push",
+                                        "options": ["--allow-push"],
+                                        "choices": ["false", "true"],
+                                        "nargs": "?"
+                                    }]
+                                },
+                                "mysql flexible-server deploy run": {
+                                    "name": "mysql flexible-server deploy run",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "action_name",
+                                        "options": ["--action-name"],
+                                        "required": true
+                                    }, {
+                                        "name": "branch",
+                                        "options": ["--branch"],
+                                        "required": true
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server server-logs": {
+                            "name": "mysql flexible-server server-logs",
+                            "commands": {
+                                "mysql flexible-server server-logs list": {
+                                    "name": "mysql flexible-server server-logs list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "filename_contains",
+                                        "options": ["--filename-contains"]
+                                    }, {
+                                        "name": "file_last_written",
+                                        "options": ["--file-last-written"],
+                                        "type": "int",
+                                        "default": 72
+                                    }, {
+                                        "name": "max_file_size",
+                                        "options": ["--max-file-size"],
+                                        "type": "int"
+                                    }]
+                                },
+                                "mysql flexible-server server-logs download": {
+                                    "name": "mysql flexible-server server-logs download",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "file_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "nargs": "+"
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server backup": {
+                            "name": "mysql flexible-server backup",
+                            "commands": {
+                                "mysql flexible-server backup create": {
+                                    "name": "mysql flexible-server backup create",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "backup_name",
+                                        "options": ["--backup-name", "-b"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server backup list": {
+                                    "name": "mysql flexible-server backup list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server backup show": {
+                                    "name": "mysql flexible-server backup show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "backup_name",
+                                        "options": ["--backup-name", "-b"],
+                                        "required": true,
+                                        "id_part": "child_name_1"
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server export": {
+                            "name": "mysql flexible-server export",
+                            "commands": {
+                                "mysql flexible-server export create": {
+                                    "name": "mysql flexible-server export create",
+                                    "is_aaz": false,
+                                    "is_preview": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--name", "-n"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "backup_name",
+                                        "options": ["--backup-name", "-b"],
+                                        "required": true
+                                    }, {
+                                        "name": "sas_uri",
+                                        "options": ["--sas-uri", "-u"],
+                                        "required": true
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server identity": {
+                            "name": "mysql flexible-server identity",
+                            "commands": {
+                                "mysql flexible-server identity assign": {
+                                    "name": "mysql flexible-server identity assign",
+                                    "is_aaz": false,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "identities",
+                                        "options": ["--identity", "-n"],
+                                        "required": true,
+                                        "nargs": "+"
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                },
+                                "mysql flexible-server identity remove": {
+                                    "name": "mysql flexible-server identity remove",
+                                    "is_aaz": false,
+                                    "confirmation": true,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "identities",
+                                        "options": ["--identity", "-n"],
+                                        "required": true,
+                                        "nargs": "+"
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                },
+                                "mysql flexible-server identity show": {
+                                    "name": "mysql flexible-server identity show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "identity",
+                                        "options": ["--identity", "-n"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server identity list": {
+                                    "name": "mysql flexible-server identity list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server ad-admin": {
+                            "name": "mysql flexible-server ad-admin",
+                            "commands": {
+                                "mysql flexible-server ad-admin create": {
+                                    "name": "mysql flexible-server ad-admin create",
+                                    "is_aaz": false,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "login",
+                                        "options": ["--display-name", "-u"],
+                                        "required": true
+                                    }, {
+                                        "name": "sid",
+                                        "options": ["--object-id", "-i"],
+                                        "required": true
+                                    }, {
+                                        "name": "identity",
+                                        "options": ["--identity"],
+                                        "required": true
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                },
+                                "mysql flexible-server ad-admin delete": {
+                                    "name": "mysql flexible-server ad-admin delete",
+                                    "is_aaz": false,
+                                    "confirmation": true,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                },
+                                "mysql flexible-server ad-admin list": {
+                                    "name": "mysql flexible-server ad-admin list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server ad-admin show": {
+                                    "name": "mysql flexible-server ad-admin show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server ad-admin wait": {
+                                    "name": "mysql flexible-server ad-admin wait",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "timeout",
+                                        "options": ["--timeout"],
+                                        "type": "int",
+                                        "default": 3600
+                                    }, {
+                                        "name": "interval",
+                                        "options": ["--interval"],
+                                        "type": "int",
+                                        "default": 30
+                                    }, {
+                                        "name": "deleted",
+                                        "options": ["--deleted"]
+                                    }, {
+                                        "name": "created",
+                                        "options": ["--created"]
+                                    }, {
+                                        "name": "updated",
+                                        "options": ["--updated"]
+                                    }, {
+                                        "name": "exists",
+                                        "options": ["--exists"]
+                                    }, {
+                                        "name": "custom",
+                                        "options": ["--custom"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server gtid": {
+                            "name": "mysql flexible-server gtid",
+                            "commands": {
+                                "mysql flexible-server gtid reset": {
+                                    "name": "mysql flexible-server gtid reset",
+                                    "is_aaz": false,
+                                    "supports_no_wait": true,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }, {
+                                        "name": "gtid_set",
+                                        "options": ["--gtid-set"],
+                                        "required": true
+                                    }, {
+                                        "name": "yes",
+                                        "options": ["--yes", "-y"]
+                                    }, {
+                                        "name": "no_wait",
+                                        "options": ["--no-wait"]
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        },
+                        "mysql flexible-server maintenance": {
+                            "name": "mysql flexible-server maintenance",
+                            "commands": {
+                                "mysql flexible-server maintenance reschedule": {
+                                    "name": "mysql flexible-server maintenance reschedule",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "maintenance_name",
+                                        "options": ["--maintenance-name", "-m"],
+                                        "required": true
+                                    }, {
+                                        "name": "maintenance_start_time",
+                                        "options": ["--start-time"],
+                                        "required": true,
+                                        "default": "2024-09-06T10:06:45+00:00"
+                                    }]
+                                },
+                                "mysql flexible-server maintenance list": {
+                                    "name": "mysql flexible-server maintenance list",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true
+                                    }]
+                                },
+                                "mysql flexible-server maintenance show": {
+                                    "name": "mysql flexible-server maintenance show",
+                                    "is_aaz": false,
+                                    "parameters": [{
+                                        "name": "resource_group_name",
+                                        "options": ["--resource-group", "-g"],
+                                        "required": true,
+                                        "id_part": "resource_group",
+                                        "has_completer": true
+                                    }, {
+                                        "name": "server_name",
+                                        "options": ["--server-name", "-s"],
+                                        "required": true,
+                                        "id_part": "name"
+                                    }, {
+                                        "name": "maintenance_name",
+                                        "options": ["--maintenance-name", "-m"],
+                                        "required": true
+                                    }]
+                                }
+                            },
+                            "sub_groups": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
