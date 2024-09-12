@@ -50,7 +50,7 @@ def load_arguments(self, _):
                      help="Space-separated list of tests to run. Can specify module or extension names, test filenames, class name or individual method names. "
                           "Omit to check all or use 'CLI' or 'EXT' to check only CLI modules or extensions respectively.",
                      completer=get_test_completion)
-        c.argument('profile', options_list='--profile', help='Run automation against a specific profile. If omit, the tests will run against current profile.')
+        c.argument('profile', options_list='--profile', choices=['latest', '2017-03-09-profile', '2018-03-01-hybrid', '2019-03-01-hybrid', '2020-09-01-profile'], help='Run automation against a specific profile. If omit, the tests will run against current profile.')
         c.argument('pytest_args', nargs=argparse.REMAINDER, options_list=['--pytest-args', '-a'], help='Denotes the remaining args will be passed to pytest.')
         c.argument('last_failed', options_list='--lf', action='store_true', help='Re-run the last tests that failed.')
         c.argument('no_exit_first', options_list='--no-exitfirst', action='store_true', help='Do not exit on first error or failed test')

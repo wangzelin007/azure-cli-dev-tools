@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.78
+++++++
+* Mitigate shell injection risk from user input.
+
 0.1.77
 ++++++
 * `azdev extension cal-next-version`: Fix pre_num when tagged preview version with `major`, `minor`, `patch`.

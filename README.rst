@@ -3,6 +3,8 @@ Microsoft Azure CLI Dev Tools (azdev)
 
 The ``azdev`` tool is designed to aid new and experienced developers in contributing to Azure CLI command modules and extensions.
 
+Notes: `azdev` command line tool is only designed for internal use and running on a local machine. It should never be used to take input from untrusted/outside sources or used behind another application.
+
 Setting up your development environment
 +++++++++++++++++++++++++++++++++++++++
 
