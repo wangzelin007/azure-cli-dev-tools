@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.79
+++++++
+* Fix profile options
+
 0.1.78
 ++++++
 * Mitigate shell injection risk from user input.
