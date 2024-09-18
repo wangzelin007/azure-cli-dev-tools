@@ -2,6 +2,11 @@
 
 Release History
 ===============
+0.1.80
+++++++
+* `azdev cmdcov`: Support both extension short name and long name
+* `azdev cmdcov`: Fix sorting issues
+
 0.1.79
 ++++++
 * Fix profile options
