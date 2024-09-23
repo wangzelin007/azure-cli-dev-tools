@@ -9,6 +9,7 @@ disable=
     raise-missing-from,
     too-few-public-methods,
     too-many-arguments,
+    too-many-positional-arguments,
     consider-using-f-string,
     unspecified-encoding,
     # These rules were added in Pylint >= 2.12, disable them to avoid making retroactive change
