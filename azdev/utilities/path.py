@@ -3,13 +3,15 @@
 # Licensed under the MIT License. See License.txt in the project root for
 # license information.
 # -----------------------------------------------------------------------------
-
+import logging
 import os
 from glob import glob
 
 from knack.util import CLIError
 
 from .const import COMMAND_MODULE_PREFIX, EXTENSION_PREFIX, ENV_VAR_VIRTUAL_ENV
+
+logger = logging.getLogger(__name__)
 
 
 def extract_module_name(path):
@@ -261,3 +263,27 @@ def get_path_table(include_only=None, include_whl_extensions=False):
         raise CLIError('unrecognized modules: [ {} ]'.format(', '.join(include_only)))
 
     return table
+
+
+def calc_selected_mod_names(modules=None):
+    # allow user to run only on CLI or extensions
+    cli_only = modules == ['CLI']
+    ext_only = modules == ['EXT']
+    if cli_only or ext_only:
+        modules = None
+
+    selected_modules = get_path_table(include_only=modules)
+
+    if cli_only:
+        selected_modules['ext'] = {}
+    if ext_only:
+        selected_modules['core'] = {}
+        selected_modules['mod'] = {}
+
+    if not any(selected_modules.values()):
+        logger.warning('No commands selected to check.')
+
+    selected_mod_names = list(selected_modules['mod'].keys())
+    selected_mod_names += list(selected_modules['ext'].keys())
+    selected_mod_names += list(selected_modules['core'].keys())
+    return selected_mod_names

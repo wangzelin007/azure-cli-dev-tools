@@ -84,3 +84,6 @@ def load_command_table(self, _):
 
     with CommandGroup(self, 'extension', operation_group('help')) as g:
         g.command('generate-docs', 'generate_extension_ref_docs')
+
+    with CommandGroup(self, '', operation_group('breaking_change')) as g:
+        g.command('generate-breaking-change-report', 'collect_upcoming_breaking_changes')

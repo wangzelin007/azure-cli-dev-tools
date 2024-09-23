@@ -47,7 +47,8 @@ from .path import (
     get_cli_repo_path,
     get_ext_repo_paths,
     get_path_table,
-    get_name_index
+    get_name_index,
+    calc_selected_mod_names
 )
 from .testing import test_cmd
 from .tools import (
@@ -93,4 +94,5 @@ __all__ = [
     'require_virtual_env',
     'require_azure_cli',
     'diff_branches_detail',
+    'calc_selected_mod_names',
 ]

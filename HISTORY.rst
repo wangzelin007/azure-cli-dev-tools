@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.82
+++++++
+* `azdev generate-breaking-change-report`: New command to collect upcoming breaking changes from codebase.
+
 0.1.81
 ++++++
 * `azdev scan/mask`: Add `--confidence-level` to support secret pattern levels

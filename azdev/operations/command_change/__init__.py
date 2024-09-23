@@ -10,7 +10,8 @@ import time
 
 from knack.log import get_logger
 import azure_cli_diff_tool
-from azdev.utilities import display, require_azure_cli, heading, get_path_table, filter_by_git_diff
+from azdev.utilities import display, require_azure_cli, heading, get_path_table, filter_by_git_diff, \
+    calc_selected_mod_names
 from .custom import DiffExportFormat, get_commands_meta, STORED_DEPRECATION_KEY
 from .util import export_commands_meta, dump_command_tree, add_to_command_tree
 from ..statistics import _create_invoker_and_load_cmds, _get_command_source, \
@@ -144,26 +145,7 @@ def cmp_command_meta(base_meta_file, diff_meta_file, only_break=False, output_ty
 def export_command_tree(modules, output_file=None):
     require_azure_cli()
 
-    # allow user to run only on CLI or extensions
-    cli_only = modules == ['CLI']
-    ext_only = modules == ['EXT']
-    if cli_only or ext_only:
-        modules = None
-
-    selected_modules = get_path_table(include_only=modules)
-
-    if cli_only:
-        selected_modules['ext'] = {}
-    if ext_only:
-        selected_modules['core'] = {}
-        selected_modules['mod'] = {}
-
-    if not any(selected_modules.values()):
-        logger.warning('No commands selected to check.')
-
-    selected_mod_names = list(selected_modules['mod'].keys())
-    selected_mod_names += list(selected_modules['ext'].keys())
-    selected_mod_names += list(selected_modules['core'].keys())
+    selected_mod_names = calc_selected_mod_names(modules)
 
     if selected_mod_names:
         display('Modules selected: {}\n'.format(', '.join(selected_mod_names)))

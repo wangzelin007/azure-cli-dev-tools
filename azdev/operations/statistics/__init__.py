@@ -194,7 +194,7 @@ def _get_command_source(command_name, command):
     }
 
 
-def _create_invoker_and_load_cmds(cli_ctx):
+def _create_invoker_and_load_cmds(cli_ctx, load_arguments=False):
     from knack.events import (
         EVENT_INVOKER_PRE_CMD_TBL_CREATE, EVENT_INVOKER_POST_CMD_TBL_CREATE)
     from azure.cli.core.commands import register_cache_arguments
@@ -215,9 +215,11 @@ def _create_invoker_and_load_cmds(cli_ctx):
     invoker.commands_loader.load_command_table(None)
     invoker.commands_loader.command_name = ''
 
-    # cli_ctx.raise_event(EVENT_INVOKER_PRE_LOAD_ARGUMENTS, commands_loader=invoker.commands_loader)
-    # invoker.commands_loader.load_arguments()
-    # cli_ctx.raise_event(EVENT_INVOKER_POST_LOAD_ARGUMENTS, commands_loader=invoker.commands_loader)
+    if load_arguments:
+        from azure.cli.core.commands.events import EVENT_INVOKER_PRE_LOAD_ARGUMENTS, EVENT_INVOKER_POST_LOAD_ARGUMENTS
+        cli_ctx.raise_event(EVENT_INVOKER_PRE_LOAD_ARGUMENTS, commands_loader=invoker.commands_loader)
+        invoker.commands_loader.load_arguments()
+        cli_ctx.raise_event(EVENT_INVOKER_POST_LOAD_ARGUMENTS, commands_loader=invoker.commands_loader)
 
     cli_ctx.raise_event(EVENT_INVOKER_POST_CMD_TBL_CREATE, commands_loader=invoker.commands_loader)
     invoker.parser.cli_ctx = cli_ctx

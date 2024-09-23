@@ -377,3 +377,14 @@ helps['cmdcov'] = """
         - name: Check CLI modules command test coverage in argument level.
           text: azdev cmdcov CLI --level argument
 """
+
+helps['generate-breaking-change-report'] = """
+    short-summary: Collect pre-announced breaking changes items and generate the report.
+    examples:
+        - name: Collect all pre-announced breaking changes, including any that did not specify a target version and group them by target version.
+          text: azdev generate-breaking-change-report CLI --group-by-version --target-version None
+        - name: Collect all pre-announced breaking changes target before next breaking change window, and display them in markdown.
+          text: azdev generate-breaking-change-report CLI --output-format markdown
+        - name: Collect all pre-announced breaking changes in vm, including those failed to specify a target version, and display them in json
+          text: azdev generate-breaking-change-report vm --target-version None
+"""

@@ -256,3 +256,17 @@ def load_arguments(self, _):
                                           'If the base directory does not exist, it will be created')
             c.argument('output_type', choices=['xml', 'html', 'text', 'man', 'latex'], default="xml",
                        help='Output type of the generated docs.')
+
+    with ArgumentsContext(self, 'generate-breaking-change-report') as c:
+        c.positional('modules', modules_type)
+        c.argument('target_version', default='NextWindow',
+                   help='Only the breaking changes scheduled prior to the specified version will be displayed. '
+                        'The value could be `NextWindow`, `None` or a specified version like `3.0.0`')
+        c.argument('source', choices=['deprecate_info', 'pre_announce'], default='pre_announce',
+                   help='The source of pre-announced breaking changes. `deprecate_info` represents all breaking changes '
+                        'marked through `deprecation_info`; `pre_announce` represents the breaking changes announced in '
+                        '`breaking_change.py` file.')
+        c.argument('group_by_version', action='store_true',
+                   help='If specified, breaking changes would be grouped by their target version as well.')
+        c.argument('output_format', choices=['structure', 'markdown'], default='structure',
+                   help='Output format of the collected breaking changes.')

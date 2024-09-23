@@ -1,0 +1,28 @@
+# Upcoming breaking changes in Azure CLI
+
+{% for module, command_bc in module_bc.items() -%}
+## {{ module }}
+
+{% for command, multi_version_bcs in command_bc.items() -%}
+{% if not (module == 'core' and command == 'core') -%}
+### `{{ command }}`
+
+{% endif -%}
+{% if multi_version_bcs is mapping -%}
+{% for version, bcs in multi_version_bcs | dictsort -%}
+###{%- if not (module == 'core' and command == 'core') -%}#{%- endif %} Deprecated in {{ version }}
+
+{% for bc in bcs -%}
+- {{ bc }}
+{% endfor %}
+
+{% endfor -%}
+{% else -%}
+
+{% for bc in multi_version_bcs -%}
+- {{ bc }}
+{% endfor %}
+
+{% endif -%}
+{% endfor -%}
+{% endfor -%}
