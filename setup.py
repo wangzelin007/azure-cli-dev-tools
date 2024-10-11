@@ -62,6 +62,7 @@ setup(
         'azdev.operations.extensions',
         'azdev.operations.statistics',
         'azdev.operations.command_change',
+        'azdev.operations.breaking_change',
         'azdev.operations.cmdcov',
         'azdev.utilities',
     ],
@@ -93,6 +94,7 @@ setup(
         'azdev.mod_templates': ['*.*'],
         'azdev.operations.linter.rules': ['ci_exclusions.yml'],
         'azdev.operations.cmdcov': ['*.*'],
+        'azdev.operations.breaking_change': ['*.*'],
     },
     include_package_data=True,
     entry_points={

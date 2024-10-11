@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.83
+++++++
+* `azdev generate-breaking-change-report`: Fix `azdev.operations.breaking_change` not included in `setup.py`.
+
 0.1.82
 ++++++
 * `azdev generate-breaking-change-report`: New command to collect upcoming breaking changes from codebase.
