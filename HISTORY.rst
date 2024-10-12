@@ -2,6 +2,10 @@
 
 Release History
 ===============
+0.1.84
+++++++
+* `azdev generate-breaking-change-report`: Fix `azdev -h` error caused by global importing `azure.cli.core` in `breaking-change.py` module.
+
 0.1.83
 ++++++
 * `azdev generate-breaking-change-report`: Fix `azdev.operations.breaking_change` not included in `setup.py`.

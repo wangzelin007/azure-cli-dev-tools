@@ -9,8 +9,6 @@ from collections import defaultdict
 from importlib import import_module
 
 import packaging.version
-from azure.cli.core.breaking_change import MergedStatusTag, UpcomingBreakingChangeTag, TargetVersion
-from knack.deprecation import Deprecated
 from knack.log import get_logger
 
 from azdev.operations.statistics import _create_invoker_and_load_cmds  # pylint: disable=protected-access
@@ -82,6 +80,9 @@ def _handle_custom_breaking_change(module, command, breaking_change):
 
 
 def _handle_status_tag(module, command, status_tag):
+    from knack.deprecation import Deprecated
+    from azure.cli.core.breaking_change import MergedStatusTag, UpcomingBreakingChangeTag, TargetVersion
+
     if isinstance(status_tag, MergedStatusTag):
         for tag in status_tag.tags:
             yield from _handle_status_tag(module, command, tag)
@@ -107,6 +108,8 @@ def _handle_command_deprecation(module, command, deprecate_info):
 
 
 def _calc_target_of_arg_deprecation(arg_name, arg_settings):
+    from knack.deprecation import Deprecated
+
     option_str_list = []
     depr = arg_settings.get('deprecate_info')
     for option in arg_settings.get('option_list', []):
@@ -128,6 +131,8 @@ def _handle_arg_deprecation(module, command, target, deprecation_info):
 
 
 def _handle_options_deprecation(module, command, options):
+    from knack.deprecation import Deprecated
+
     deprecate_option_map = defaultdict(lambda: [])
     for option in options:
         if isinstance(option, Deprecated):
