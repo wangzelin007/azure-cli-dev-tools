@@ -160,7 +160,7 @@ helps['linter'] = """
           text: azdev linter --repo azure-cli --tgt upstream/master --src upstream/dev
 """
 
-helps['scan'] = """
+helps['scan'] = r"""
     short-summary: Scan secrets for files or string
     long-summary: Check built-in scanning rules at https://github.com/microsoft/security-utilities/blob/main/GeneratedRegexPatterns/PreciselyClassifiedSecurityKeys.json
     examples:

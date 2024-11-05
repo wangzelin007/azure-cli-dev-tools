@@ -33,9 +33,9 @@ jobs:
     name: 'pool-ubuntu-2004'
   steps:
   - task: UsePythonVersion@0
-    displayName: 'Use Python 3.8'
+    displayName: 'Use Python 3.12'
     inputs:
-      versionSpec: 3.8
+      versionSpec: 3.12
 
   - task: Bash@3
     displayName: 'Run Wheel Build Script'
@@ -57,9 +57,9 @@ jobs:
     name: 'pool-ubuntu-2004'
   steps:
   - task: UsePythonVersion@0
-    displayName: 'Use Python 3.8'
+    displayName: 'Use Python 3.12'
     inputs:
-      versionSpec: 3.8
+      versionSpec: 3.12
 
   - task: Bash@3
     displayName: 'Run Wheel Build Script'
@@ -80,10 +80,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
     - task: UsePythonVersion@0
       displayName: 'Use Python $(python.version)'
@@ -137,10 +137,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
   - task: DownloadPipelineArtifact@1
     displayName: 'Download Build'
@@ -169,10 +169,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
   - task: DownloadPipelineArtifact@1
     displayName: 'Download Build'
@@ -201,10 +201,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
   - task: DownloadPipelineArtifact@1
     displayName: 'Download Build'
@@ -233,10 +233,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
   - task: DownloadPipelineArtifact@1
     displayName: 'Download Build'
@@ -264,10 +264,10 @@ jobs:
     name: 'pool-ubuntu-2004'
   strategy:
     matrix:
-      Python38:
-        python.version: '3.8'
       Python39:
         python.version: '3.9'
+      Python312:
+        python.version: '3.12'
   steps:
     - task: DownloadPipelineArtifact@1
       displayName: 'Download Build'

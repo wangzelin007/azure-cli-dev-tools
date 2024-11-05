@@ -239,8 +239,8 @@ class CmdcovManager:
             self.command_test_coverage['Total'][0] += count
             self.command_test_coverage['Total'][1] += len(self.all_untested_commands[module])
         self.command_test_coverage['Total'][2] = f'''{self.command_test_coverage["Total"][0] /
-                                                 (self.command_test_coverage["Total"][0] +
-                                                  self.command_test_coverage["Total"][1]):.3%}'''
+                                                      (self.command_test_coverage["Total"][0] +
+                                                       self.command_test_coverage["Total"][1]):.3%}'''
         logger.warning(self.command_test_coverage)
         return self.command_test_coverage
 
