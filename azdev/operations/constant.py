@@ -82,15 +82,24 @@ EXCLUDE_MODULES = [
 
 # refer to doc: https://review.learn.microsoft.com/en-us/help/platform/metadata-taxonomies/allowed-html?branch=main
 ALLOWED_HTML_TAG = [
-    "a", "address", "article", "b", "blockquote", "br", "button", "br /",
+    "a", "address", "article", "b", "blockquote", "button", "br", "br /",
+    "/a", "/address", "/article", "/b", "/blockquote", "/button", "/br", "br/",
     "caption", "center", "cite", "code", "col", "colgroup",
+    "/caption", "/center", "/cite", "/code", "/col", "/colgroup",
     "dd", "del", "details", "div", "dl", "dt", "em", "figcaption", "figure", "form",
+    "/dd", "/del", "/details", "/div", "/dl", "/dt", "/em", "/figcaption", "/figure", "/form",
     "h1", "h2", "h3", "h4", "head", "hr",
+    "/h1", "/h2", "/h3", "/h4", "/head", "/hr",
     "i", "iframe", "image", "img", "input", "ins", "kbd",
+    "/i", "/iframe", "/image", "/img", "/input", "/ins", "/kbd",
     "label", "li", "nav", "nobr", "ol", "p", "pre", "rgn",
+    "/label", "/li", "/nav", "/nobr", "/ol", "/p", "/pre", "/rgn",
     "s", "section", "source", "span", "strike", "strong", "sub", "summary", "sup",
+    "/s", "/section", "/source", "/span", "/strike", "/strong", "/sub", "/summary", "/sup",
     "table", "tbody", "td", "tfoot", "th", "thead", "tr",
-    "u", "ul", "wbr"
+    "/table", "/tbody", "/td", "/tfoot", "/th", "/thead", "/tr",
+    "u", "ul", "wbr",
+    "/u", "/ul", "/wbr",
 ]
 
 DISALLOWED_HTML_TAG_RULE_LINK = "https://review.learn.microsoft.com/en-us/help/platform/validation-ref/disallowed-html-tag?branch=main"
