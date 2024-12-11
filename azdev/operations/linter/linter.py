@@ -296,7 +296,7 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
         added_commands, deleted_commands, parameters = set(), set(), []
 
         for diff in diff_index:
-            path, filename = self._split_path(diff.a_path)
+            _, filename = self._split_path(diff.a_path)
             if not any(key in filename for key in ('params', 'commands')):
                 continue
 
