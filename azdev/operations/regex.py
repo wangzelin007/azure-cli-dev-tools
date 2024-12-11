@@ -162,3 +162,13 @@ def search_command(line):
     if ref:
         command = ref[0].split(',')[0].strip("'")
     return command
+
+
+def search_deleted_command(line):
+    command = ''
+    # Match `- g.*command(xxx)`
+    pattern = r'\-\s+g.(?:\w+)?command\((.*)\)'
+    ref = re.findall(pattern, line)
+    if ref:
+        command = ref[0].split(',')[0].strip("'")
+    return command
