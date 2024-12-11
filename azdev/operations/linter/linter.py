@@ -225,18 +225,18 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
         return self._run_parameter_test_coverage(parameters, all_tested_command)
 
     def _get_exclusions(self):
-        exclude_commands = set()
-        exclude_parameters = set()
+        _exclude_commands = set()
+        _exclude_parameters = set()
         for command, details in self.exclusions.items():
             if 'parameters' in details:
                 for param, rules in details['parameters'].items():
                     if 'missing_parameter_test_coverage' in rules['rule_exclusions']:
-                        exclude_parameters.add((command, param))
+                        _exclude_parameters.add((command, param))
             if 'rule_exclusions' in details and 'missing_command_test_coverage' in details['rule_exclusions']:
-                exclude_commands.add(command)
-        _logger.debug('exclude_parameters: %s', exclude_parameters)
-        _logger.debug('exclude_comands: %s', exclude_commands)
-        return exclude_commands, exclude_parameters
+                _exclude_commands.add(command)
+        _logger.debug('exclude_parameters: %s', _exclude_parameters)
+        _logger.debug('exclude_comands: %s', _exclude_commands)
+        return _exclude_commands, _exclude_parameters
 
     def _split_path(self, path: str):
         parts = path.rsplit('/', maxsplit=1)
@@ -255,19 +255,20 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
                 return int(match[0]) + offset
         return -1
 
-    def _extract_parameters(self, lines, current_lines, path, exclude_commands, exclude_parameters, parameters):
+    def _extract_parameters(self, lines, current_lines, _exclude_commands, _exclude_parameters, parameters):
         for row_num, line in enumerate(lines):
             params, param_name = search_argument(line)
             if params:
                 idx = self._get_line_number(lines, row_num, r'--- (\d+),(?:\d+) ----')
                 commands = search_argument_context(idx, current_lines)
                 for cmd in commands:
-                    if cmd not in exclude_commands and (cmd, param_name) not in exclude_parameters:
+                    if cmd not in _exclude_commands and (cmd, param_name) not in _exclude_parameters:
                         parameters.append((cmd, params))
                         _logger.debug('Detected parameter: [%s, %s]', cmd, params)
         return parameters
 
-    def _extract_commands(self, lines, original_lines, current_lines, added_commands, deleted_commands, exclude_commands, yellow_color):
+    def _extract_commands(self, lines, original_lines, current_lines, added_commands,
+                          deleted_commands, _exclude_commands, yellow_color):
         for row_num, line in enumerate(lines):
             added_command = search_command(line)
             deleted_command = search_deleted_command(line)
@@ -276,8 +277,9 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
                 idx = self._get_line_number(lines, row_num, r'--- (\d+),(?:\d+) ----')
                 cmd = search_command_group(idx, current_lines, added_command)
                 if cmd:
-                    if cmd in exclude_commands:
-                        _logger.warning('%sCommand %s not tested and excluded in linter_exclusions.yml', yellow_color, cmd)
+                    if cmd in _exclude_commands:
+                        _logger.warning('%sCommand %s not tested and excluded in linter_exclusions.yml',
+                                        yellow_color, cmd)
                     else:
                         added_commands.add(cmd)
 
@@ -290,7 +292,7 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
 
     def _detect_new_command(self, diff_index: List) -> Tuple[List[str], List[Tuple[str, str]]]:
         YELLOW = '\x1b[33m'
-        exclude_commands, exclude_parameters = self._get_exclusions()
+        _exclude_commands, _exclude_parameters = self._get_exclusions()
         added_commands, deleted_commands, parameters = set(), set(), []
 
         for diff in diff_index:
@@ -303,12 +305,13 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
             lines = list(context_diff(original_lines, current_lines, 'Original', 'Current'))
 
             if 'params.py' in filename:
-                parameters = self._extract_parameters(lines, current_lines, path, exclude_commands, exclude_parameters, parameters)
+                parameters = self._extract_parameters(lines, current_lines, _exclude_commands,
+                                                      _exclude_parameters, parameters)
 
             if 'commands.py' in filename:
                 added_commands, deleted_commands = self._extract_commands(lines, original_lines, current_lines,
                                                                           added_commands, deleted_commands,
-                                                                          exclude_commands, YELLOW)
+                                                                          _exclude_commands, YELLOW)
 
         commands = list(added_commands - deleted_commands)
         _logger.debug('New parameters: %s', parameters)
