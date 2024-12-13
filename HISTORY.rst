@@ -2,6 +2,9 @@
 
 Release History
 ===============
+0.1.88
+* `azdev cmdcov`: Fix incorrect detection of code changes as new commands
+
 0.1.87
 ++++++
 * `azdev linter`: Fix repo path failed when `detect_new_command`.

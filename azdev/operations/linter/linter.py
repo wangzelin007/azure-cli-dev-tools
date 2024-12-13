@@ -11,6 +11,7 @@ import inspect
 import os
 import re
 from pkgutil import iter_modules
+from typing import List, Tuple
 import yaml
 from knack.log import get_logger
 
@@ -19,6 +20,7 @@ from azdev.operations.regex import (
     search_argument,
     search_argument_context,
     search_command,
+    search_deleted_command,
     search_command_group)
 from azdev.utilities import diff_branches_detail, diff_branch_file_patch
 from azdev.utilities.path import get_cli_repo_path, get_ext_repo_paths
@@ -222,86 +224,100 @@ class Linter:  # pylint: disable=too-many-public-methods, too-many-instance-attr
         all_tested_command = self._detect_tested_command(diff_index)
         return self._run_parameter_test_coverage(parameters, all_tested_command)
 
-    # pylint: disable=too-many-locals, too-many-nested-blocks, too-many-branches, too-many-statements
-    def _detect_new_command(self, diff_index):
-        """
-        exclude_comands: List[str]
-        exclude_parameters: List[tuple[str, str]]
-        commands: List[str]
-        parameters: List[str, List[str]]
-        """
+    def _get_exclusions(self):
+        _exclude_commands = set()
+        _exclude_parameters = set()
+        for command, details in self.exclusions.items():
+            if 'parameters' in details:
+                for param, rules in details['parameters'].items():
+                    if 'missing_parameter_test_coverage' in rules['rule_exclusions']:
+                        _exclude_parameters.add((command, param))
+            if 'rule_exclusions' in details and 'missing_command_test_coverage' in details['rule_exclusions']:
+                _exclude_commands.add(command)
+        _logger.debug('exclude_parameters: %s', _exclude_parameters)
+        _logger.debug('exclude_comands: %s', _exclude_commands)
+        return _exclude_commands, _exclude_parameters
+
+    def _split_path(self, path: str):
+        parts = path.rsplit('/', maxsplit=1)
+        return parts if len(parts) == 2 else ('', parts[0])
+
+    def _read_blob_lines(self, blob):
+        return blob.data_stream.read().decode("utf-8").splitlines(True) if blob else []
+
+    def _get_line_number(self, lines: List[str], row_num: int, pattern: str):
+        offset = -1
+        while row_num > 0:
+            row_num -= 1
+            match = re.findall(pattern, lines[row_num])
+            offset += 1
+            if match:
+                return int(match[0]) + offset
+        return -1
+
+    def _extract_parameters(self, lines, current_lines, _exclude_commands, _exclude_parameters, parameters):
+        for row_num, line in enumerate(lines):
+            params, param_name = search_argument(line)
+            if params:
+                idx = self._get_line_number(lines, row_num, r'--- (\d+),(?:\d+) ----')
+                commands = search_argument_context(idx, current_lines)
+                for cmd in commands:
+                    if cmd not in _exclude_commands and (cmd, param_name) not in _exclude_parameters:
+                        parameters.append((cmd, params))
+                        _logger.debug('Detected parameter: [%s, %s]', cmd, params)
+        return parameters
+
+    def _extract_commands(self, lines, original_lines, current_lines, added_commands,
+                          deleted_commands, _exclude_commands, yellow_color):
+        for row_num, line in enumerate(lines):
+            added_command = search_command(line)
+            deleted_command = search_deleted_command(line)
+
+            if added_command:
+                idx = self._get_line_number(lines, row_num, r'--- (\d+),(?:\d+) ----')
+                cmd = search_command_group(idx, current_lines, added_command)
+                if cmd:
+                    if cmd in _exclude_commands:
+                        _logger.warning('%sCommand %s not tested and excluded in linter_exclusions.yml',
+                                        yellow_color, cmd)
+                    else:
+                        added_commands.add(cmd)
+
+            elif deleted_command:
+                idx = self._get_line_number(lines, row_num, r'\*\*\* (\d+),(?:\d+) \*\*\*\*')
+                cmd = search_command_group(idx, original_lines, deleted_command)
+                if cmd:
+                    deleted_commands.add(cmd)
+        return added_commands, deleted_commands
+
+    def _detect_new_command(self, diff_index: List) -> Tuple[List[str], List[Tuple[str, str]]]:
         YELLOW = '\x1b[33m'
-        parameters = []
-        commands = []
-        lines = []
-        exclude_comands = []
-        exclude_parameters = []
-        for c, v in self.exclusions.items():
-            if 'parameters' in v:
-                for p, r in v['parameters'].items():
-                    if 'missing_parameter_test_coverage' in r['rule_exclusions']:
-                        exclude_parameters.append((c, p))
-            if 'rule_exclusions' in v:
-                if 'missing_command_test_coverage' in v['rule_exclusions']:
-                    exclude_comands.append(c)
-        _logger.debug('exclude_parameters: %s', exclude_parameters)
-        _logger.debug('exclude_comands: %s', exclude_comands)
+        _exclude_commands, _exclude_parameters = self._get_exclusions()
+        added_commands, deleted_commands, parameters = set(), set(), []
 
         for diff in diff_index:
-            filename = diff.a_path.split('/')[-1]
-            if 'params' in filename or 'commands' in filename:
-                lines = list(
-                    context_diff(diff.a_blob.data_stream.read().decode("utf-8").splitlines(True) if diff.a_blob else [],
-                                 diff.b_blob.data_stream.read().decode("utf-8").splitlines(True) if diff.b_blob else [],
-                                 'Original', 'Current'))
-            for row_num, line in enumerate(lines):
-                if 'params.py' in filename:
-                    params, param_name = search_argument(line)
-                    if params:
-                        offset = -1
-                        while row_num > 0:
-                            row_num -= 1
-                            # Match row num '--- 156,163 ----'
-                            sub_pattern = r'--- (\d{0,}),(?:\d{0,}) ----'
-                            idx = re.findall(sub_pattern, lines[row_num])
-                            offset += 1
-                            if idx:
-                                idx = int(idx[0]) + offset
-                                break
-                        with open(os.path.join(self.git_repo, diff.a_path), encoding='utf-8') as f:
-                            param_lines = f.readlines()
-                        cmds = search_argument_context(idx, param_lines)
-                        for cmd in cmds:
-                            if cmd not in exclude_comands and \
-                                    not list(filter(lambda x, c=cmd, p=param_name: c in x[0] and p in x[1], exclude_parameters)):  # pylint: disable=line-too-long
-                                parameters.append([cmd, params])
-                            else:
-                                print('%sCommand [%s, %s] not test and exclude in linter_exclusions.yml' % (
-                                    YELLOW, cmd, params))
+            _, filename = self._split_path(diff.a_path)
+            if not any(key in filename for key in ('params', 'commands')):
+                continue
 
-                if 'commands.py' in filename:
-                    command = search_command(line)
-                    if command:
-                        offset = -1
-                        while row_num > 0:
-                            row_num -= 1
-                            # Match row num '--- 156,163 ----'
-                            sub_pattern = r'--- (\d{0,}),(?:\d{0,}) ----'
-                            idx = re.findall(sub_pattern, lines[row_num])
-                            offset += 1
-                            if idx:
-                                idx = int(idx[0]) + offset
-                                break
-                        with open(os.path.join(self.git_repo, diff.a_path), encoding='utf-8') as f:
-                            cmd_lines = f.readlines()
-                        cmd = search_command_group(idx, cmd_lines, command)
-                        if cmd:
-                            if cmd in exclude_comands:
-                                print('%sCommand %s not test and exclude in linter_exclusions.yml' % (YELLOW, cmd))
-                            else:
-                                commands.append(cmd)
-        _logger.debug('New add parameters: %s', parameters)
-        _logger.debug('New add commands: %s', commands)
+            original_lines = self._read_blob_lines(diff.a_blob)
+            current_lines = self._read_blob_lines(diff.b_blob)
+            lines = list(context_diff(original_lines, current_lines, 'Original', 'Current'))
+
+            if 'params.py' in filename:
+                parameters = self._extract_parameters(lines, current_lines, _exclude_commands,
+                                                      _exclude_parameters, parameters)
+
+            if 'commands.py' in filename:
+                added_commands, deleted_commands = self._extract_commands(lines, original_lines, current_lines,
+                                                                          added_commands, deleted_commands,
+                                                                          _exclude_commands, YELLOW)
+
+        commands = list(added_commands - deleted_commands)
+        _logger.debug('New parameters: %s', parameters)
+        _logger.debug('Added commands: %s', added_commands)
+        _logger.debug('Deleted commands: %s', deleted_commands)
+        _logger.debug('Final commands: %s', commands)
         return commands, parameters
 
     def _detect_tested_command(self, diff_index):
