@@ -74,8 +74,6 @@ jobs:
       ArtifactName: pypi_cli_diff_tool
 
 - job: Unittest
-  timeoutInMinutes: 10
-
   pool:
     name: 'pool-ubuntu-2004'
   strategy:
