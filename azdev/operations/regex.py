@@ -144,6 +144,7 @@ def search_argument(line):
 def search_command_group(row_num, lines, command):
     cmd = ''
     while row_num > 0:
+        row_num = len(lines) - 1 if row_num >= len(lines) else row_num
         row_num -= 1
         # Match `with self.command_group('local-context',` and `with self.command_group('xxx')`
         sub_pattern = r'with self.command_group\(\'(.*?)\',?'
@@ -166,8 +167,8 @@ def search_command(line):
 
 def search_deleted_command(line):
     command = ''
-    # Match `- g.*command(xxx)`
-    pattern = r'\-\s+g.(?:\w+)?command\((.*)\)'
+    # Match `[-!] g.*command(xxx)`
+    pattern = r'[-!]\s+g.(?:\w+)?command\((.*)\)'
     ref = re.findall(pattern, line)
     if ref:
         command = ref[0].split(',')[0].strip("'")

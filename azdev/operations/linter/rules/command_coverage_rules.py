@@ -8,7 +8,7 @@ from ..rule_decorators import CommandCoverageRule
 from ..linter import RuleError, LinterSeverity
 
 
-@CommandCoverageRule(LinterSeverity.HIGH)
+@CommandCoverageRule(LinterSeverity.MEDIUM)
 def missing_command_test_coverage(linter):
     exec_state, violations = linter.get_command_test_coverage()
     if not exec_state:
