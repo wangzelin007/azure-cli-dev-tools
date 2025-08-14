@@ -182,7 +182,16 @@ class CmdcovManager:
             for f in files:
                 with open(os.path.join(test_dir, f)) as f:
                     # safe_load can not determine a constructor for the tag: !!python/unicode
-                    records = yaml.load(f, Loader=yaml.Loader) or {}
+                    try:
+                        records = yaml.load(f, Loader=yaml.Loader) or {}
+                    except yaml.parser.ParserError:
+                        logger.error(f"Failed to parse YAML file: {f.name}")
+                        # TODO: azext_aosm\tests\latest\mock_cnf\helm-charts\nf-agent-cnf\templates\tests\test-connection.yaml
+                        continue
+                    except yaml.scanner.ScannerError:
+                        logger.error(f"Failed to parse YAML file: {f.name}")
+                        # TODO: azext_containerapp\tests\latest\recordings\test_containerapp_up_source_with_multiple_environments_e2e.yaml
+                        continue
                     for record in records['interactions']:
                         # ['acr agentpool create']
                         command = record['request']['headers'].get('CommandName', [''])[0]
