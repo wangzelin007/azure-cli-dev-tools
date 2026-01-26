@@ -182,7 +182,13 @@ class CmdcovManager:
             for f in files:
                 with open(os.path.join(test_dir, f)) as f:
                     # safe_load can not determine a constructor for the tag: !!python/unicode
-                    records = yaml.load(f, Loader=yaml.Loader) or {}
+                    try:
+                        records = yaml.load(f, Loader=yaml.Loader) or {}
+                    except yaml.YAMLError as e:
+                        logger.debug("Skipping invalid YAML file %s: %s", f.name, e)
+                        continue
+                    if 'interactions' not in records:
+                        continue
                     for record in records['interactions']:
                         # ['acr agentpool create']
                         command = record['request']['headers'].get('CommandName', [''])[0]
