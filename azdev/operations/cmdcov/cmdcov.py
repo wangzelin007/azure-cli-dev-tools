@@ -73,18 +73,22 @@ class CmdcovManager:
         self._get_all_tested_commands_from_record()
         self._run_command_test_coverage()
         html_file = self._render_html()
+        logger.warning("enable_cli_own: %s", self.enable_cli_own)
         if self.enable_cli_own:
             command_test_coverage = {k: v for k, v in self.command_test_coverage.items() if k in CLI_OWN_MODULES}
-            total_tested = 0
-            total_untested = 0
-            command_test_coverage['Total'] = [0, 0, 0]
-            for module in command_test_coverage.keys():
-                total_tested += command_test_coverage[module][0] if command_test_coverage[module] else 0
-                total_untested += command_test_coverage[module][1] if command_test_coverage[module] else 0
-            command_test_coverage['Total'][0] = total_tested
-            command_test_coverage['Total'][1] = total_untested
-            command_test_coverage['Total'][2] = f'{total_tested / (total_tested + total_untested):.3%}'
-            self._render_cli_html(command_test_coverage)
+            logger.warning("CLI_OWN_MODULES matched modules: %s", list(command_test_coverage.keys()))
+            if not command_test_coverage:
+                logger.warning("No modules matched CLI_OWN_MODULES, skipping index2.html generation")
+            else:
+                total_tested = 0
+                total_untested = 0
+                for module in command_test_coverage.keys():
+                    total_tested += command_test_coverage[module][0] if command_test_coverage[module] else 0
+                    total_untested += command_test_coverage[module][1] if command_test_coverage[module] else 0
+                command_test_coverage['Total'] = [total_tested, total_untested, 'N/A']
+                if total_tested + total_untested > 0:
+                    command_test_coverage['Total'][2] = f'{total_tested / (total_tested + total_untested):.3%}'
+                self._render_cli_html(command_test_coverage)
         self._browse(html_file)
 
     def _get_all_commands(self):
